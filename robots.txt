@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://benfuller.me/sitemap.xml
