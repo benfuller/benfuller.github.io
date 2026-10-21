@@ -228,20 +228,20 @@ MILESTONES = [
 
 
 PROJECTS = [
-    {"id": "re-decision-engine", "role": "insidepartners", "when": T("2020 – Present", "2020 – Actualidad"),
+    {"id": "re-decision-engine", "role": "insidepartners", "when": T("2025 – Present", "2025 – Actualidad"),
      "title": T("Real-estate ML decision engine", "Motor de decisión de ML inmobiliario"),
      "summary": T("Per-asset hold, sell, refinance and renovate scoring, fed from AppFolio and QuickBooks into BigQuery with a Looker layer.",
                   "Puntuación por activo de mantener, vender, refinanciar y reformar, alimentada desde AppFolio y QuickBooks hacia BigQuery con una capa de Looker."),
      "outcome": T("Scores each asset on DSCR, LTV, cap rate and cash-on-cash return.",
                   "Puntúa cada activo según DSCR, LTV, cap rate y rentabilidad sobre el efectivo invertido."),
      "skills": ["proptech", "bigquery", "looker"], "stack": ["gcp", "appfolio", "quickbooks", "sql"]},
-    {"id": "billing-agents", "role": "insidepartners", "when": T("2020 – Present", "2020 – Actualidad"),
+    {"id": "billing-agents", "role": "insidepartners", "when": T("2025 – Present", "2025 – Actualidad"),
      "title": T("Agentic AI for core billing", "IA agéntica para la facturación"),
      "summary": T("A multi-agent system that took over a core billing process end to end.",
                   "Un sistema multiagente que asumió de principio a fin un proceso de facturación clave."),
      "outcome": T("Cut the process from three days to four hours.", "Redujo el proceso de tres días a cuatro horas."),
      "skills": ["multi-agent", "rag", "mcp"], "stack": []},
-    {"id": "ai-governance", "role": "insidepartners", "when": T("2020 – Present", "2020 – Actualidad"),
+    {"id": "ai-governance", "role": "insidepartners", "when": T("2025 – Present", "2025 – Actualidad"),
      "title": T("Responsible-AI governance and enablement", "Gobernanza y habilitación de IA responsable"),
      "summary": T("Reference patterns, guardrails and enablement programs for safe AI adoption, aligned to NIST AI RMF.",
                   "Patrones de referencia, guardrails y programas de habilitación para una adopción segura de la IA, alineados con NIST AI RMF."),
@@ -387,7 +387,7 @@ CASES = {
 # Where each project sits on the timeline page, as (year, month). These are
 # estimates inside each role's dates; the page labels them "~". Edit freely.
 AT = {
-    "re-decision-engine": (2025, 3), "billing-agents": (2024, 6), "ai-governance": (2025, 9), "elteve": (2022, 5),
+    "re-decision-engine": (2026, 2), "billing-agents": (2025, 11), "ai-governance": (2026, 6), "elteve": (2022, 5),
     "nymblr-ranking": (2022, 7), "nymblr-integration": (2023, 11),
     "onemata-streaming": (2020, 10), "onemata-quality": (2021, 6), "onemata-portal": (2022, 1),
     "altisource-aws": (2016, 6), "altisource-avm": (2015, 2), "altisource-buybox": (2015, 6), "altisource-ma": (2018, 6),
