@@ -399,12 +399,11 @@ def role_html(role, lang):
     actions = (
         f'<button type="button" class="skills-toggle" aria-expanded="false" aria-controls="{sid}" hidden>'
         f'{h(ui("role_skills", lang))} <span class="count">{len(role["skills"])}</span><span class="chev" aria-hidden="true"></span></button>'
-        f'{a(page_path(lang, role["page"]), ui("more_page", lang))}'
         f'{a(f"{home(lang)}?company={role["id"]}#projects", ui("related_projects", lang, n=nproj))}')
     bullets = "\n".join(f"          <li>{rich(tr(b, lang), lang)}</li>" for b in role["bullets"])
     return f'''      <article class="job" id="{role["id"]}">
         <div class="job-head">
-          <div class="logos">{logos(role)}</div>
+          <a class="logos" href="{page_path(lang, role["page"])}" aria-label="{esc(ui("company_page", lang))}: {esc(role["company"])}" title="{esc(ui("company_page", lang))}: {esc(role["company"])}">{logos(role)}</a>
           <div>
             <h3>{role_heading(role, lang)}</h3>
             <div class="when">{role_meta(role, lang)}</div>
