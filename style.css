@@ -254,6 +254,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 .vt .ev.job { margin-bottom: 0; }
 .vt .ev.job::before { left: -35px; top: 3px; width: 14px; height: 14px; margin-left: -2px; border-radius: 50%; border: 3px solid var(--c); background: var(--c); box-shadow: 0 0 0 4px var(--bg); }
 .vt .ev.job.end::before, .vt .ev.job.now::before { background: var(--bg); }
+.vt .ev.job.milestone::before { left: -32px; top: 6px; width: 10px; height: 10px; margin-left: 0; border-radius: 2px; transform: rotate(45deg); border-width: 2px; background: var(--bg); box-shadow: 0 0 0 3px var(--bg); }
+.ev.job.milestone .ttl { font-weight: 500; }
 .vt .ev.job.now::before { animation: pulse 2s ease-out infinite; }
 .vt .ev.project::before { left: -31px; top: 8px; width: 8px; height: 8px; border-radius: 50%; opacity: .75; box-shadow: 0 0 0 3px var(--bg); }
 .vt .ev.press::before { left: -32px; top: 5px; width: 10px; height: 10px; background: var(--c-press); transform: rotate(45deg); border-radius: 2px; box-shadow: 0 0 0 3px var(--bg); }

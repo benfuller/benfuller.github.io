@@ -288,6 +288,10 @@ def timeline_events():
         else:
             ev.append({"pos": now.year + (now.month - 1) / 12 + 0.06, "tie": i, "type": "job", "kind": "now",
                        "role": r["id"], "year": now.year})
+    for i, m_ in enumerate(C.MILESTONES):
+        y, m = m_["date"]
+        ev.append({"pos": y + (m - 1) / 12 + 0.015, "tie": i, "type": "job", "kind": "milestone", "milestone": m_,
+                   "role": m_["role"], "year": y, "month": m})
     for i, p in enumerate(C.PROJECTS):
         y, m = p["at"]
         ev.append({"pos": y + (m - 1) / 12 + 0.02, "tie": i, "type": "project", "kind": "project", "project": p,
@@ -302,6 +306,13 @@ def timeline_events():
 
 def event_html(e, lang):
     base = home(lang)
+    if e["type"] == "job" and e["kind"] == "milestone":
+        r, m_ = ROLE[e["role"]], e["milestone"]
+        when = f'{MONTHS_SHORT[lang][e["month"] - 1]} {e["year"]}'
+        return (f'<li class="ev job milestone" data-type="job" data-role="{r["id"]}">'
+                f'<div class="ev-meta"><span class="k">{"Milestone" if lang == "en" else "Hito"}</span><span class="d">{h(when)}</span></div>'
+                f'<a class="ttl" href="{page_path(lang, r["page"])}#acquisition">{h(tr(m_["title"], lang))}</a>'
+                f'<span class="sub">{h(tr(m_["sub"], lang))}</span></li>')
     if e["type"] == "job":
         r = ROLE[e["role"]]
         if e["kind"] == "now":
@@ -309,6 +320,8 @@ def event_html(e, lang):
         else:
             k, d = ui("tl_started" if e["kind"] == "start" else "tl_ended", lang), str(e["year"])
         title = f'{h(tr(r["title"], lang))} · {h(r["company"])}'
+        if e["kind"] == "start" and r.get("start_title"):
+            title = f'{h(tr(r["title"], lang))} · {h(tr(r["start_title"], lang))}'
         return (f'<li class="ev job {e["kind"]}" data-type="job" data-role="{r["id"]}">'
                 f'<div class="ev-meta"><span class="k">{h(k)}</span><span class="d">{h(d)}</span></div>'
                 f'<a class="ttl" href="{page_path(lang, r["page"])}">{title}</a></li>')
@@ -603,7 +616,8 @@ def build_company(lang, key):
             parts.append(f'<p>{rich(tr(b["p"], lang), lang)}</p>')
         if b.get("list"):
             parts.append("<ul>" + "".join(f"<li>{h(tr(i, lang))}</li>" for i in b["list"]) + "</ul>")
-        blocks.append("    <section>\n      " + "\n      ".join(parts) + "\n    </section>")
+        sec_id = ' id="acquisition"' if "acquisition" in tr(b["h"], "en").lower() and "After" not in tr(b["h"], "en") else ""
+        blocks.append(f"    <section{sec_id}>\n      " + "\n      ".join(parts) + "\n    </section>")
     bullets = "".join(f"<li>{rich(tr(b, lang), lang)}</li>" for b in role["bullets"])
     projs = [p for p in C.PROJECTS if p["role"] == role["id"]]
     plist = "".join(
@@ -716,6 +730,10 @@ def build_index(lang):
         add("role", f'{plain(tr(r["title"], lang))} · {r["company"]}', tr(r["when"], lang), f"{base}#{r['id']}", k)
         add("role", f'{r["company"]}: ' + ("company page" if lang == "en" else "página de la empresa"),
             tr(r["when"], lang), page_path(lang, r["page"]), r["company"] + " screenshots links")
+    for m_ in C.MILESTONES:
+        r = ROLE[m_["role"]]
+        add("role", tr(m_["title"], lang), f'{MONTHS_SHORT[lang][m_["date"][1] - 1]} {m_["date"][0]}',
+            f'{page_path(lang, r["page"])}#acquisition', "rentrange investability goldengator reismart acquisition altisource 2015")
     for p in C.PROJECTS:
         r = ROLE[p["role"]]
         k = " ".join([skill_name(s, lang) for s in p["skills"] + p["stack"]]
