@@ -5,66 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Onemata · Benjamin Fuller</title>
   <meta name="description" content="Head of Engineering at Onemata, a Denver mobile location data company. First engineering hire; grew the team from 1 to 15.">
+  <link rel="canonical" href="https://benfuller.me/onemata/">
+  <link rel="alternate" hreflang="en" href="https://benfuller.me/onemata/">
+  <link rel="alternate" hreflang="es" href="https://benfuller.me/es/onemata/">
+  <link rel="alternate" hreflang="x-default" href="https://benfuller.me/onemata/">
   <meta property="og:title" content="Onemata · Benjamin Fuller">
   <meta property="og:description" content="Head of Engineering at Onemata, a Denver mobile location data company. First engineering hire; grew the team from 1 to 15.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://benfuller.me/onemata/">
   <meta property="og:image" content="https://benfuller.me/media/companies/onemata-2022.png">
-  <link rel="canonical" href="https://benfuller.me/onemata/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" href="/media/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="apple-touch-icon" href="/media/apple-touch-icon.png">
   <link rel="manifest" href="/media/site.webmanifest">
+  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121315" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <header class="top">
-    <div class="wrap">
+    <div class="wrap hdr">
       <a class="brand" href="/">Benjamin Fuller</a>
-      <nav>
+      <div class="tools">
+        <button type="button" class="search-btn" id="search-open" aria-label="Search this site" aria-keyshortcuts="Control+K Meta+K">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd>
+        </button>
+        <span class="lang" role="group" aria-label="Language / Idioma"><span class="cur" aria-current="true" lang="en">EN</span><span aria-hidden="true">/</span><a href="/es/onemata/" hreflang="es" lang="es" aria-label="Ver este sitio en español">ES</a></span>
+      </div>
+      <nav aria-label="Primary">
         <a href="/#about">About</a>
         <a href="/#experience">Experience</a>
-        <a href="/#press">Press</a>
+        <a href="/#projects">Projects</a>
         <a href="/#contact">Contact</a>
       </nav>
     </div>
   </header>
-  <main class="wrap">
-
+  <main class="wrap" id="main">
     <p class="crumb"><a href="/#experience">Experience</a> / Onemata</p>
-    <h1 class="page-title">Onemata</h1>
+    <div class="page-head">
+      <div class="logos"><span class="logo "><img src="/media/logos/onemata.png" alt="Onemata logo" loading="lazy"></span></div>
+      <h1 class="page-title">Onemata</h1>
+    </div>
     <p class="page-sub">Compliance-first mobile location data, based in Denver.</p>
-    <ul class="facts">
-      <li>Head of Engineering</li>
-      <li>2020 – 2022</li>
-      <li>Denver, CO</li>
-      <li>First engineering hire</li>
-    </ul>
+    <ul class="facts"><li>Head of Engineering</li><li>2020 – 2022</li><li>Denver, CO</li><li>First engineering hire</li></ul>
+    
 
     <section>
       <h2>The product</h2>
-      <figure class="shot">
-        <a href="https://web.archive.org/web/20220513214216/https://www.onemata.com/"><img src="/media/companies/onemata-2022.png" alt="Screenshot of the Onemata homepage, May 2022: 'Onemata's Vision' with a map of Denver and a mobile location data audience panel." loading="lazy"></a>
-        <figcaption>The Onemata homepage in May 2022. The original site is no longer live, so this is a screenshot of the <a href="https://web.archive.org/web/20220513214216/https://www.onemata.com/">Internet Archive snapshot</a>. Onemata is also on <a href="https://www.linkedin.com/company/onemata">LinkedIn</a>.</figcaption>
-      </figure>
+      <figure class="shot"><a href="https://web.archive.org/web/20220513214216/https://www.onemata.com/"><img src="/media/companies/onemata-2022.png" alt="Screenshot of the Onemata homepage, May 2022: &#x27;Onemata&#x27;s Vision&#x27; with a map of Denver and a mobile location data audience panel." width="1440" height="1000" loading="lazy"></a><figcaption>The Onemata homepage in May 2022. The original site is no longer live, so this is a screenshot of the <a href="https://web.archive.org/web/20220513214216/https://www.onemata.com/">Internet Archive snapshot</a>. Onemata is also on <a href="https://www.linkedin.com/company/onemata">LinkedIn</a>.</figcaption></figure>
       <p>Onemata described itself as "the largest provider of compliance-first, SDK-derived, mobile location data." Its data was delivered as mobile device IDs, IP addresses, geo coordinates and timestamps. At the time, the site cited coverage in 190 countries and 865 million monthly active users. The company also offered a product called Inbox Gold.</p>
     </section>
 
     <section>
       <h2>What I did</h2>
-      <ul>
-        <li>First engineering hire; grew the team from 1 to 15.</li>
-        <li>Built a high-volume, event-driven streaming platform on AWS (Kafka, Spark on EMR, ECS) with proprietary data-quality, fraud-detection, and bot-detection algorithms.</li>
-        <li>Shipped a self-serve delivery portal that cut client onboarding from 3+ months to under 24 hours.</li>
-        <li>SOC 2; $1.2M in annual savings.</li>
-      </ul>
+      <ul><li>First engineering hire; grew the team from 1 to 15.</li><li>Built a high-volume, event-driven streaming platform on AWS (Kafka, Spark on EMR, ECS) with proprietary data-quality, fraud-detection, and bot-detection algorithms.</li><li>Shipped a self-serve delivery portal that cut client onboarding from 3+ months to under 24 hours.</li><li>SOC 2; $1.2M in annual savings.</li></ul>
     </section>
 
-    <p class="back"><a href="/#experience">&larr; Back to experience</a></p>
+    <section>
+      <h2>Projects</h2>
+      <ul class="press"><li><a href="/?project=onemata-streaming#p-onemata-streaming">Event-driven streaming platform</a><span class="src">Kafka, Spark on EMR and ECS; SOC 2; $1.2M in annual savings.</span></li><li><a href="/?project=onemata-quality#p-onemata-quality">Data-quality, fraud and bot detection</a><span class="src">Quality, fraud and bot detection built into the pipeline rather than bolted on.</span></li><li><a href="/?project=onemata-portal#p-onemata-portal">Self-serve delivery portal</a><span class="src">Client onboarding dropped from 3+ months to under 24 hours.</span></li></ul>
+      <p class="more"><a href="/?company=onemata#projects">3 related projects →</a></p>
+    </section>
+
+    <section>
+      <h2>Skills used</h2>
+      <div class="tags"><a class="tag" href="/?skill=aws#projects" data-skill="aws" title="3 projects · 3 roles">AWS</a> <a class="tag" href="/?skill=kafka#projects" data-skill="kafka" title="2 projects · 1 roles">Kafka</a> <a class="tag" href="/?skill=spark#projects" data-skill="spark" title="1 projects · 1 roles">Spark</a> <a class="tag" href="/?skill=emr#projects" data-skill="emr" title="1 projects · 1 roles">Amazon EMR</a> <a class="tag" href="/?skill=ecs#projects" data-skill="ecs" title="1 projects · 1 roles">Amazon ECS / containers</a> <a class="tag" href="/?skill=event-driven#projects" data-skill="event-driven" title="2 projects · 1 roles">Event-driven systems</a> <a class="tag" href="/?skill=near-real-time#projects" data-skill="near-real-time" title="1 projects · 1 roles">Near-real-time systems</a> <a class="tag" href="/?skill=soc2#projects" data-skill="soc2" title="1 projects · 1 roles">SOC 2</a> <a class="tag" href="/?skill=finops#projects" data-skill="finops" title="2 projects · 2 roles">FinOps / cost optimization</a> <a class="tag" href="/?skill=team#projects" data-skill="team" title="4 projects · 3 roles">Team building</a> <span class="tag off" title="0 projects · 3 roles">Hiring &amp; coaching</span> <span class="tag off" title="0 projects · 1 roles">High availability</span> <span class="tag off" title="0 projects · 1 roles">Observability</span></div>
+    </section>
+
+    <section>
+      <h2>Links</h2>
+      <ul class="plain"><li><a href="https://www.linkedin.com/company/onemata" rel="noopener">Onemata on LinkedIn</a></li><li><a href="https://web.archive.org/web/20220513214216/https://www.onemata.com/" rel="noopener">Onemata homepage, May 2022 (Internet Archive)</a></li></ul>
+    </section>
+
+    <p class="back"><a href="/#experience">← Back to experience</a></p>
   </main>
   <footer>
-    <div class="wrap">&copy; <span id="yr">2026</span> Benjamin Fuller</div>
+    <div class="wrap">
+      <span>&copy; 2026 Benjamin Fuller</span>
+      <span class="foot-links">
+        <a href="/privacy/">Privacy &amp; cookies</a>
+        <button type="button" class="linklike" data-open-cookies>Cookie settings</button>
+      </span>
+    </div>
   </footer>
-  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <script type="application/json" id="site-config">{"lang": "en", "home": "/", "searchIndex": "/search-index.json", "privacy": "/privacy/", "posthog": {"key": "", "host": "https://eu.i.posthog.com"}, "ui": {"search": "Jump to a role, project, skill…", "empty": "Nothing matches. Try a technology, company or year.", "hint": "↑↓ to move · Enter to open · Esc to close", "types": {"section": "Sections", "role": "Experience", "project": "Projects", "skill": "Skills", "press": "Press", "action": "Actions"}, "count": "{n} of {total} projects", "total": "{total} projects", "searchAria": "Search this site", "top": "Back to top", "consent": {"title": "Your privacy", "text": "This site is a personal resume. With your permission I use PostHog to count visits and see which pages are useful. Nothing loads until you choose.", "accept": "Accept analytics", "reject": "Reject", "prefs": "Preferences", "save": "Save choices", "necessary": "Necessary", "necessary_d": "Remembers your cookie choice on this device. Always on.", "analytics": "Analytics (PostHog)", "analytics_d": "Anonymous page views and clicks, hosted in the EU. Off unless you allow it.", "more": "Read the privacy policy", "close": "Close"}}}</script>
+  <script src="/site.js" defer></script>
+  <script src="/consent.js" defer></script>
 </body>
 </html>
