@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benjamin Fuller · Engineering Leader &amp; Founder-CTO</title>
+  <meta name="description" content="Founder-CTO and hands-on engineering leader building production AI and the teams that ship it.">
+  <meta property="og:title" content="Benjamin Fuller">
+  <meta property="og:description" content="Founder-CTO and hands-on engineering leader building production AI and the teams that ship it.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://benfuller.me/">
+  <meta property="og:image" content="https://benfuller.me/media/icon-512.png">
+  <link rel="icon" href="/media/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/media/apple-touch-icon.png">
+  <link rel="manifest" href="/media/site.webmanifest">
+  <link rel="canonical" href="https://benfuller.me/">
+  <meta name="theme-color" content="#ffffff">
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --fg: #1c1d1f;
+      --muted: #5f6368;
+      --line: #e3e2dd;
+      --accent: #1f5fbf;
+      --chip: #eeede8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121315;
+        --fg: #e8e8e6;
+        --muted: #9a9da3;
+        --line: #2a2c30;
+        --accent: #7ab0ff;
+        --chip: #1d1f23;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    header.top { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .brand { font-weight: 700; color: var(--fg); }
+    nav a { margin-left: 20px; color: var(--muted); font-size: 15px; }
+    nav a:first-child { margin-left: 0; }
+    nav a:hover { color: var(--fg); text-decoration: none; }
+
+    .hero { padding: 72px 0 40px; }
+    .hero-top { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; }
+    .headshot { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center 20%; flex: none; border: 1px solid var(--line); }
+    .hero-top h1 { margin: 0 0 8px; }
+    .hero-top .role { margin: 0; }
+    .hero h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.02em; }
+    .hero .role { font-size: 1.15rem; color: var(--muted); margin: 0 0 20px; }
+    .hero .tagline { font-size: 1.3rem; line-height: 1.45; margin: 0 0 24px; }
+    .meta { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+    .links a { display: inline-block; margin: 0 8px 8px 0; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--fg); font-size: 15px; }
+    .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    section { padding: 44px 0; border-top: 1px solid var(--line); }
+    h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 24px; }
+    p { margin: 0 0 16px; }
+
+    .pillars { list-style: none; padding: 0; margin: 0; }
+    .pillars li { margin-bottom: 16px; }
+    .pillars strong { display: block; }
+
+    .job { margin-bottom: 40px; }
+    .job:last-child { margin-bottom: 0; }
+    .job h3 { margin: 0; font-size: 1.2rem; line-height: 1.3; }
+    .job .co { color: var(--muted); font-weight: 400; }
+    .job .when { color: var(--muted); font-size: 15px; margin: 2px 0 12px; }
+    .job ul { margin: 0; padding-left: 20px; }
+    .job li { margin-bottom: 6px; }
+
+    .skills { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .skills div { font-size: 16px; }
+    .skills b { display: block; font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
+
+    footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+    @media (min-width: 700px) {
+      .skills { grid-template-columns: 1fr 1fr; gap: 20px 32px; }
+    }
+    @media print {
+      header.top, .links { display: none; }
+      body { background: #fff; color: #000; font-size: 12px; }
+      section { padding: 16px 0; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#top">Benjamin Fuller</a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="top">
+    <div class="hero">
+      <div class="hero-top">
+        <img class="headshot" src="/media/headshot.jpg" alt="Benjamin Fuller" width="120" height="120" onerror="this.remove()">
+        <div>
+          <h1>Benjamin Fuller</h1>
+          <p class="role">Engineering Leader · Founder-CTO · AI-Native Builder</p>
+        </div>
+      </div>
+      <p class="tagline">Founder-CTO and hands-on engineering leader building production AI and the teams that ship it.</p>
+      <p class="meta">Denver, CO &amp; Barcelona, Spain · Open to remote (US &amp; EU)</p>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/benjamin-fuller-in">LinkedIn</a>
+        <a href="#experience">See my work</a>
+      </div>
+    </div>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>I've been the first engineer in the door, the co-founder who set the architecture and the hiring bar, and the leader directing 50+ engineers across four business units through their managers. I've built platforms from the first commit and grown engineering teams from one person to fifteen, reaching thousands of customers as a co-founder.</p>
+      <p>These days my work is AI-native: multi-agent systems, RAG, tool and function calling, and MCP integrations, with the evaluation, guardrails, and governance that keep AI a force multiplier instead of a liability. I care about outcomes over activity, I stay close to the code, and I build the kind of engineering culture where strong people do their best work.</p>
+      <p>15+ years spanning early-stage builds and NASDAQ-scale organizations. I think like a product owner and stay technical enough to challenge a model, interrogate an incident, and keep the trust of the engineers I lead.</p>
+    </section>
+
+    <section id="what-i-do">
+      <h2>What I do</h2>
+      <ul class="pillars">
+        <li><strong>Build and lead engineering teams</strong>From first hire to a team of fifteen, and directing 50+ engineers through their managers across distributed, cross-continental teams.</li>
+        <li><strong>Ship production AI, hands-on</strong>Multi-agent orchestration, RAG, tool/function calling, vector search, and MCP integrations; daily work with modern AI coding tools.</li>
+        <li><strong>Scale platforms through growth</strong>High-volume, event-driven, near-real-time systems built from scratch and modernized without stopping the business.</li>
+        <li><strong>Make AI adoption real and safe</strong>Enablement programs and responsible-AI governance (aligned to NIST AI RMF): guardrails, evaluation, least-privilege access, and human-in-the-loop review.</li>
+        <li><strong>Lead with product and commercial judgment</strong>Unit economics, roadmaps, and trade-offs translated into engineering strategy.</li>
+      </ul>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+
+      <article class="job" id="insidepartners">
+        <h3>Co-Founder &amp; CTO / Chief Automation Officer <span class="co">· InsidePartners.ai</span></h3>
+        <div class="when">2020 – Present · Remote · formerly Onit Tech Solutions</div>
+        <ul>
+          <li>Co-founder and technical lead of an AI automation and fractional-engineering-leadership practice.</li>
+          <li>Build production agentic AI: multi-agent systems, RAG, and MCP integrations.</li>
+          <li>Set the standards, governance, and reference patterns for safe adoption.</li>
+          <li>Representative outcomes: cut a core billing process from three days to four hours; $250K+ in annual savings per engagement.</li>
+        </ul>
+      </article>
+
+      <article class="job" id="nymblr">
+        <h3>Co-Founder &amp; CTO → VP of Engineering <span class="co">· Nymblr</span></h3>
+        <div class="when">2022 – 2025 · Remote · acquired by Inunity</div>
+        <ul>
+          <li>Built the full platform from the first commit on AWS, including a production ranking and lead-scoring engine serving 135M+ records at sub-second retrieval.</li>
+          <li>Reached 3,000+ clients and $50K MRR in 12 months; grew the team from 0 to 15.</li>
+          <li>After acquisition, led the technical integration into a live multi-product platform with no customer interruption.</li>
+          <li>Ran a cross-continental engineering team (US, India, Europe) through their leaders.</li>
+        </ul>
+      </article>
+
+      <article class="job" id="onemata">
+        <h3>Head of Engineering <span class="co">· Onemata</span></h3>
+        <div class="when">2020 – 2022 · Denver, CO</div>
+        <ul>
+          <li>First engineering hire; grew the team from 1 to 15.</li>
+          <li>Built a high-volume, event-driven streaming platform on AWS (Kafka, Spark on EMR, ECS) with proprietary data-quality, fraud-detection, and bot-detection algorithms.</li>
+          <li>Shipped a self-serve delivery portal that cut client onboarding from 3+ months to under 24 hours.</li>
+          <li>SOC 2; $1.2M in annual savings.</li>
+        </ul>
+      </article>
+
+      <article class="job" id="altisource">
+        <h3>Manager → Senior Manager, Product Development <span class="co">· Altisource (NASDAQ: ASPS)</span></h3>
+        <div class="when">2014 – 2020 · Denver, CO + Global</div>
+        <ul>
+          <li>Grew from the RentRange acquisition into enterprise engineering leadership.</li>
+          <li>Directed 50+ engineers across four business units, through directors and managers, on regulated financial and mortgage data.</li>
+          <li>Led enterprise cloud modernization to AWS with multi-million-dollar cost reductions.</li>
+          <li>Led roughly 7 M&amp;A integrations.</li>
+          <li>Led a patented Rental Automated Valuation Model.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div><b>Leadership</b>Engineering org design, scaling teams through managers, hiring and coaching, distributed/global teams</div>
+        <div><b>AI-native engineering</b>Multi-agent systems, RAG, MCP, tool/function calling, vector search; AI coding tools; adoption enablement &amp; governance (NIST AI RMF)</div>
+        <div><b>Platforms &amp; scale</b>Event-driven and near-real-time systems, Kafka, Spark/EMR, sub-second retrieval, high availability, observability</div>
+        <div><b>Cloud</b>AWS, serverless, containers/ECS, CI/CD, FinOps/cost optimization</div>
+        <div><b>Hands-on</b>Python, TypeScript/React, SQL</div>
+        <div><b>Regulated &amp; secure</b>SOC 2, HIPAA/CLIA, regulated financial data</div>
+        <div><b>Product &amp; commercial</b>Unit economics, roadmaps, cross-functional partnership</div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <p><strong>B.S. Management of Computer Systems</strong><br>University of Wisconsin-Whitewater, 2011</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>The best way to reach me is on <a href="https://www.linkedin.com/in/benjamin-fuller-in">LinkedIn</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">&copy; <span id="yr">2026</span> Benjamin Fuller</div>
+  </footer>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
