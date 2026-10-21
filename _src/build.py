@@ -160,6 +160,18 @@ def site_config(lang):
     }
 
 
+# Sends a first-time visitor whose browser prefers Spanish from an English page to its Spanish twin.
+# No storage, no cookies. Skipped for in-site navigation (so the EN link on a Spanish page works) and for
+# crawlers, which report English. Spanish pages never redirect anywhere.
+AUTO_LANG = ("(function(){try{if(document.documentElement.lang!=='en')return;"
+             "if(document.referrer&&new URL(document.referrer).origin===location.origin)return;"
+             "var L=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];"
+             "for(var i=0;i<L.length;i++){var l=String(L[i]).toLowerCase();"
+             "if(l==='es'||l.indexOf('es-')===0){location.replace(%s+location.search+location.hash);return;}"
+             "if(l==='en'||l.indexOf('en-')===0)return;}}catch(e){}})();")
+# the Spanish address is baked in per page: at this point in <head> the hreflang <link> tags don't exist yet
+
+
 def head(lang, key, title, desc, alts, og_type="website", jsonld=None, image=None):
     canon = URL + alts[lang]
     tags = [
@@ -190,6 +202,8 @@ def head(lang, key, title, desc, alts, og_type="website", jsonld=None, image=Non
         '<meta name="theme-color" content="#121315" media="(prefers-color-scheme: dark)">',
         '<link rel="stylesheet" href="/style.css">',
     ]
+    if lang == "en":
+        tags.insert(2, "<script>" + (AUTO_LANG % json.dumps(alts["es"])) + "</script>")
     if jsonld:
         tags.append('<script type="application/ld+json">' + json.dumps(jsonld, ensure_ascii=False).replace("</", "<\\/") + "</script>")
     return "\n  ".join(tags)
@@ -732,7 +746,7 @@ def build_index(lang):
     for m_ in C.MILESTONES:
         r = ROLE[m_["role"]]
         add("role", tr(m_["title"], lang), f'{MONTHS_SHORT[lang][m_["date"][1] - 1]} {m_["date"][0]}',
-            f'{page_path(lang, r["page"])}#acquisition', "rentrange investability goldengator reismart acquisition altisource 2015")
+            f'{page_path(lang, r["page"])}#acquisition', "rentrange investability goldengator reismart acquisition adquisicion adquisición altisource 2015")
     for p in C.PROJECTS:
         r = ROLE[p["role"]]
         k = " ".join([skill_name(s, lang) for s in p["skills"] + p["stack"]]
@@ -745,10 +759,10 @@ def build_index(lang):
             f"{base}?skill={sid}#projects", " ".join(s[3] + [tr(CAT[s[1]]["name"], lang)]))
     for p in C.HOME["press"]:
         add("press", tr(p["title"], lang), tr(p["source"], lang), p["url"],
-            " ".join([tr(p["source"], lang), plain(tr(p["blurb"], lang)), "future 5 acquire elteve inunity nymblr nimbler"]), x=1)
+            " ".join([tr(p["source"], lang), plain(tr(p["blurb"], lang)), p.get("keywords", "")]), x=1)
     add("action", ui("print", lang), "", "#print", "pdf resume cv", a="print")
     add("action", tr(C.UI["actions"]["lang"], lang), "", page_path(OTHER[lang], "x") if False else home(OTHER[lang]),
-        "language idioma español english")
+        "language idioma spanish español english inglés castellano")
     add("action", tr(C.UI["actions"]["linkedin"], lang), "", SITE["linkedin"], "contact", x=1)
     add("action", tr(C.UI["actions"]["privacy"], lang), "", page_path(lang, "privacy"), "cookies gdpr")
     write(f"{PREFIX[lang].strip('/')}/search-index.json".lstrip("/"), json.dumps(items, ensure_ascii=False, separators=(",", ":")))

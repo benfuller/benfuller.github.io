@@ -172,7 +172,7 @@
       else if (e.ns.indexOf(t) > -1) sc = 30;
       else if (e.nk.indexOf(' ' + t) > -1 || e.nk.indexOf(t) === 0) sc = 25;
       else if (e.nk.indexOf(t) > -1) sc = 15;
-      else if (t.length > 2 && subseq(t, e.nn)) sc = 6;
+      else if (t.length > 2 && e.nn.length <= 32 && subseq(t, e.nn)) sc = 6;   // typo-tolerant, short names only
       else return 0;
       total += sc;
     }
