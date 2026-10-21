@@ -108,6 +108,9 @@ SKILLS = [
     ("cross-functional", "product", T("Cross-functional partnership", "Colaboración transversal"), ["stakeholders"]),
     ("proptech", "product", T("Real estate & proptech", "Sector inmobiliario y proptech"), ["real estate", "property"]),
     ("avm", "product", T("Automated valuation (AVM)", "Valoración automatizada (AVM)"), ["valuation", "underwriting", "rental"]),
+    ("product", "product", T("Product & commercial", "Producto y negocio"), ["product management", "commercial"]),
+    ("ecommerce", "product", T("E-commerce & ad-tech", "E-commerce y ad-tech"), ["advertising", "shopify", "marketing", "qr"]),
+    ("logistics", "product", T("Logistics integrations", "Integraciones logísticas"), ["shipstation", "usps", "3pl", "shipping", "carriers"]),
 ]
 
 # ----------------------------------------------------------------------------
@@ -136,7 +139,7 @@ ROLES = [
         ],
         "skills": ["multi-agent", "rag", "mcp", "tool-calling", "vector-search", "claude", "claude-code", "cursor",
                    "governance", "evals", "hitl", "enablement", "least-priv", "gcp", "bigquery", "looker", "appfolio",
-                   "quickbooks", "proptech", "unit-economics", "cross-functional"],
+                   "quickbooks", "proptech", "unit-economics", "cross-functional", "aws", "team", "ecommerce", "logistics"],
     },
     {
         "id": "nymblr", "company": "Nymblr", "page": "nymblr", "span": (2022, 2025),
@@ -228,6 +231,13 @@ PROJECTS = [
      "outcome": T("Evaluation, least-privilege access and human-in-the-loop review became the default pattern; $250K+ in annual savings per engagement.",
                   "La evaluación, el acceso de mínimo privilegio y la revisión con humano en el circuito se convirtieron en el patrón por defecto; más de 250.000 $ de ahorro anual por proyecto."),
      "skills": ["governance", "evals", "hitl"], "stack": ["least-priv", "enablement"]},
+    {"id": "elteve", "role": "insidepartners", "when": T("2022 – 2024", "2022 – 2024"),
+     "title": T("On-parcel ad-tech platform (Elteve)", "Plataforma de ad-tech en el paquete (Elteve)"),
+     "summary": T("An on-parcel ad-tech platform that turned e-commerce shipping labels into addressable, QR-driven marketing surfaces.",
+                  "Una plataforma de ad-tech en el paquete que convirtió las etiquetas de envío del e-commerce en superficies de marketing direccionables, basadas en códigos QR."),
+     "outcome": T("Live pilots at 3 logistics/3PL hubs with 5 consumer brands, with integration partnerships with ShipStation and USPS, before a PE acquisition.",
+                  "Pilotos en vivo en 3 centros logísticos/3PL con 5 marcas de consumo, con alianzas de integración con ShipStation y USPS, antes de una adquisición por parte de un fondo de capital privado."),
+     "skills": ["product", "aws", "team", "ecommerce", "logistics"], "stack": []},
     {"id": "nymblr-ranking", "role": "nymblr", "when": T("2022 – 2025", "2022 – 2025"),
      "title": T("Ranking and lead-scoring engine", "Motor de ranking y scoring de leads"),
      "summary": T("The production engine behind Nymblr's prospect search, built from the first commit on AWS.",
@@ -306,6 +316,11 @@ CASES = {
           "Los equipos que adoptan herramientas de IA avanzan rápido pero sin guardrails compartidos, lo que pone en riesgo la calidad, la seguridad y la consistencia de los resultados a medida que crece la adopción."),
         T("Established reference patterns, guardrails, and enablement programs aligned to NIST AI RMF: evaluation in the workflow, least-privilege access for agents, and human-in-the-loop review.",
           "Establecí patrones de referencia, guardrails y programas de habilitación alineados con NIST AI RMF: evaluación dentro del flujo de trabajo, acceso de mínimo privilegio para los agentes y revisión con humano en el circuito.")),
+    "elteve": (
+        T("Every parcel leaving a warehouse was a missed marketing opportunity: e-commerce brands had no way to turn the physical shipping label into an owned, addressable channel.",
+          "Cada paquete que salía de un almacén era una oportunidad de marketing perdida: las marcas de e-commerce no tenían forma de convertir la etiqueta de envío física en un canal propio y direccionable."),
+        T("Co-founded the venture and led engineering as CTO, building the full stack (a Shopify app for brand onboarding and campaigns, a Chrome extension, a ShipStation desktop integration for 3PL hubs, and a NextJS/React advertiser dashboard) on patented QR-driven label technology, and drove the live pilot integrations with ShipStation and USPS.",
+          "Cofundé la empresa y lideré la ingeniería como CTO, construyendo el stack completo (una app de Shopify para la incorporación de marcas y las campañas, una extensión de Chrome, una integración de escritorio con ShipStation para centros 3PL y un panel de anunciantes en NextJS/React) sobre una tecnología de etiquetas con QR patentada, y dirigí las integraciones de los pilotos en vivo con ShipStation y USPS.")),
     "nymblr-ranking": (
         T("A prospecting platform is only as good as its search: users have to find and rank the right B2B contacts out of hundreds of millions of records, instantly.",
           "Una plataforma de prospección es tan buena como su búsqueda: los usuarios tienen que encontrar y ordenar los contactos B2B adecuados entre cientos de millones de registros, al instante."),
