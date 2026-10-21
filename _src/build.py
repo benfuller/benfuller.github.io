@@ -217,7 +217,7 @@ def header(lang, nav_items, alts):
         </button>
         <span class="lang" role="group" aria-label="Language / Idioma">{langs[0]}<span aria-hidden="true">/</span>{langs[1]}</span>
       </div>
-      <nav aria-label="{"Primary" if lang == "en" else "Principal"}">
+      <nav aria-label="{"Primary" if lang == "en" else "Principal"}" style="--cols:{3 if len(nav_items) > 4 else len(nav_items)}">
         {nav}
       </nav>
     </div>
