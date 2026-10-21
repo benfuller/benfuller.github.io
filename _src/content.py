@@ -108,7 +108,7 @@ SKILLS = [
     ("cross-functional", "product", T("Cross-functional partnership", "Colaboración transversal"), ["stakeholders"]),
     ("proptech", "product", T("Real estate & proptech", "Sector inmobiliario y proptech"), ["real estate", "property"]),
     ("avm", "product", T("Automated valuation (AVM)", "Valoración automatizada (AVM)"), ["valuation", "underwriting", "rental"]),
-    ("product", "product", T("Product & commercial", "Producto y negocio"), ["product management", "commercial"]),
+    ("product", "product", T("Commercial judgment", "Criterio comercial"), ["product", "product & commercial", "go to market", "business"]),
     ("ecommerce", "product", T("E-commerce & ad-tech", "E-commerce y ad-tech"), ["advertising", "shopify", "marketing", "qr"]),
     ("logistics", "product", T("Logistics integrations", "Integraciones logísticas"), ["shipstation", "usps", "3pl", "shipping", "carriers"]),
 ]
@@ -241,9 +241,9 @@ PROJECTS = [
                   "La evaluación, el acceso de mínimo privilegio y la revisión con humano en el circuito se convirtieron en el patrón por defecto; más de 250.000 $ de ahorro anual por proyecto."),
      "skills": ["governance", "evals", "hitl"], "stack": ["least-priv", "enablement"]},
     {"id": "elteve", "role": "insidepartners", "when": T("2022 – 2024", "2022 – 2024"),
-     "title": T("On-parcel ad-tech platform (Elteve)", "Plataforma de ad-tech en el paquete (Elteve)"),
+     "title": T("On-parcel ad-tech platform (Elteve)", "Plataforma de ad-tech sobre el paquete (Elteve)"),
      "summary": T("An on-parcel ad-tech platform that turned e-commerce shipping labels into addressable, QR-driven marketing surfaces.",
-                  "Una plataforma de ad-tech en el paquete que convirtió las etiquetas de envío del e-commerce en superficies de marketing direccionables, basadas en códigos QR."),
+                  "Una plataforma de ad-tech sobre el paquete que convirtió las etiquetas de envío del e-commerce en superficies de marketing direccionables, basadas en códigos QR."),
      "outcome": T("Live pilots at 3 logistics/3PL hubs with 5 consumer brands, with integration partnerships with ShipStation and USPS, before a PE acquisition.",
                   "Pilotos en vivo en 3 centros logísticos/3PL con 5 marcas de consumo, con alianzas de integración con ShipStation y USPS, antes de una adquisición por parte de un fondo de capital privado."),
      "skills": ["product", "aws", "team", "ecommerce", "logistics"], "stack": []},
@@ -710,6 +710,7 @@ UI = {
     "footer_privacy": T("Privacy & cookies", "Privacidad y cookies"),
     "footer_cookies": T("Cookie settings", "Ajustes de cookies"),
     "print": T("Print / save as PDF", "Imprimir / guardar como PDF"),
+    "download_cv": T("Download résumé (PDF)", "Descargar currículum (PDF)"),
     "actions": {
         "lang": T("Switch language to Español", "Cambiar idioma a English"),
         "linkedin": T("Open LinkedIn", "Abrir LinkedIn"),

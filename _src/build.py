@@ -29,6 +29,7 @@ MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "Au
              "November", "December"]
 SITE = C.SITE
 URL = SITE["url"]
+CV = {"en": "/benjamin-fuller-resume.pdf", "es": "/es/benjamin-fuller-curriculum.pdf"}
 
 
 # ---------------------------------------------------------------- helpers
@@ -99,6 +100,18 @@ def uses():
 USE_P, USE_R = uses()
 
 
+def used_in(lang, p, r):
+    if lang == "es":
+        return f"{p} {'proyecto' if p == 1 else 'proyectos'} · {r} {'puesto' if r == 1 else 'puestos'}"
+    return f"{p} {'project' if p == 1 else 'projects'} · {r} {'role' if r == 1 else 'roles'}"
+
+
+def related_projects(lang, n):
+    if lang == "es":
+        return f"{n} {'proyecto relacionado' if n == 1 else 'proyectos relacionados'} →"
+    return f"{n} related {'project' if n == 1 else 'projects'} →"
+
+
 def ui(key, lang, **kw):
     return fill(tr(C.UI[key], lang), **{k: str(v) for k, v in kw.items()})
 
@@ -124,7 +137,7 @@ def skill_link(sid, lang, cls="tag", count=False):
     n = len(USE_P.get(sid, []))
     r = len(USE_R.get(sid, []))
     badge = f'<span class="n">{n}</span>' if count and n else ""
-    title = esc(ui("used_in", lang, p=n, r=r))
+    title = esc(used_in(lang, n, r))
     if not n:
         return f'<span class="{cls} off" title="{title}">{h(skill_name(sid, lang))}</span>'
     return (f'<a class="{cls}" href="{home(lang)}?skill={sid}#projects" data-skill="{sid}" title="{title}">'
@@ -184,7 +197,7 @@ def head(lang, key, title, desc, alts, og_type="website", jsonld=None, image=Non
     for lg in LANGS:
         tags.append(f'<link rel="alternate" hreflang="{lg}" href="{URL + alts[lg]}">')
     tags.append(f'<link rel="alternate" hreflang="x-default" href="{URL + alts["en"]}">')
-    img = image or f"{URL}/media/headshot.jpg"
+    img = image or f"{URL}/media/og-card.png"
     tags += [
         f'<meta property="og:title" content="{esc(title)}">',
         f'<meta property="og:description" content="{esc(desc)}">',
@@ -193,7 +206,8 @@ def head(lang, key, title, desc, alts, og_type="website", jsonld=None, image=Non
         f'<meta property="og:image" content="{img}">',
         f'<meta property="og:locale" content="{LOCALE[lang]}">',
         f'<meta property="og:locale:alternate" content="{LOCALE[OTHER[lang]]}">',
-        '<meta name="twitter:card" content="summary">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:image" content="{img}">',
         '<link rel="icon" href="/media/favicon.svg" type="image/svg+xml">',
         '<link rel="icon" href="/favicon.ico" sizes="48x48">',
         '<link rel="apple-touch-icon" href="/media/apple-touch-icon.png">',
@@ -413,7 +427,7 @@ def role_html(role, lang):
     actions = (
         f'<button type="button" class="skills-toggle" aria-expanded="false" aria-controls="{sid}" hidden>'
         f'{h(ui("role_skills", lang))} <span class="count">{len(role["skills"])}</span><span class="chev" aria-hidden="true"></span></button>'
-        f'{a(f"{home(lang)}?company={role["id"]}#projects", ui("related_projects", lang, n=nproj))}')
+        f'{a(f"{home(lang)}?company={role["id"]}#projects", related_projects(lang, nproj))}')
     bullets = "\n".join(f"          <li>{rich(tr(b, lang), lang)}</li>" for b in role["bullets"])
     return f'''      <article class="job" id="{role["id"]}">
         <div class="job-head">
@@ -537,6 +551,7 @@ def build_home(lang):
       <div class="links">
         {li}
         <a href="#experience">{h(ui("see_my_work", lang))}</a>
+        <a href="{CV[lang]}" download>{h(ui("download_cv", lang))}</a>
       </div>
     </div>
 
@@ -593,6 +608,7 @@ def build_home(lang):
     <section id="contact">
       <h2>{h(ui("contact_h", lang))}</h2>
       <p>{fill(h(tr(H["contact"], lang)), linkedin=li)}</p>
+      <p><a href="{CV[lang]}" download>{h(ui("download_cv", lang))}</a></p>
       <p>{h(tr(H["languages"], lang))}</p>
     </section>'''
     alts = {lg: home(lg) for lg in LANGS}
@@ -668,7 +684,7 @@ def build_company(lang, key):
     <section>
       <h2>{h(ui("company_projects", lang))}</h2>
       <ul class="press">{plist}</ul>
-      <p class="more">{a(f"{base}?company={role['id']}#projects", ui("related_projects", lang, n=len(projs)))}</p>
+      <p class="more">{a(f"{base}?company={role['id']}#projects", related_projects(lang, len(projs)))}</p>
     </section>
 
     <section>
@@ -697,8 +713,8 @@ def build_privacy(lang):
     posthog = a("https://posthog.com/privacy", tr(P["posthog_privacy_text"], lang))
     github = a("https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
                tr(P["github_privacy_text"], lang))
-    cookies_btn = ('<button type="button" class="linklike" data-open-cookies>'
-                   + ("cookie settings" if lang == "en" else "los ajustes de cookies") + "</button>")
+    cookies_btn = ('<a href="#" role="button" data-open-cookies>'
+                   + ("cookie settings" if lang == "en" else "los ajustes de cookies") + "</a>")
     if SITE["contact_email"]:
         contact = fill(h(tr(P["contact_email"], lang)), email=a("mailto:" + SITE["contact_email"], SITE["contact_email"]))
     else:
@@ -755,11 +771,12 @@ def build_index(lang):
     for s in C.SKILLS:
         sid = s[0]
         n, rr = len(USE_P.get(sid, [])), len(USE_R.get(sid, []))
-        add("skill", tr(s[2], lang), f'{tr(CAT[s[1]]["name"], lang)} · ' + ui("used_in", lang, p=n, r=rr),
+        add("skill", tr(s[2], lang), f'{tr(CAT[s[1]]["name"], lang)} · ' + used_in(lang, n, rr),
             f"{base}?skill={sid}#projects", " ".join(s[3] + [tr(CAT[s[1]]["name"], lang)]))
     for p in C.HOME["press"]:
         add("press", tr(p["title"], lang), tr(p["source"], lang), p["url"],
             " ".join([tr(p["source"], lang), plain(tr(p["blurb"], lang)), p.get("keywords", "")]), x=1)
+    add("action", ui("download_cv", lang), "", CV[lang], "pdf resume cv curriculum currículum download descargar", x=1)
     add("action", ui("print", lang), "", "#print", "pdf resume cv", a="print")
     add("action", tr(C.UI["actions"]["lang"], lang), "", page_path(OTHER[lang], "x") if False else home(OTHER[lang]),
         "language idioma spanish español english inglés castellano")
@@ -793,6 +810,78 @@ def build_consent_js():
     write("consent.js", tmpl.replace("/*POSTHOG_STUB*/", stub))
 
 
+# ---------------------------------------------------------------- résumé PDF
+
+RESUME_CSS = """
+@page { size: %s; margin: 0.5in 0.6in; }
+* { box-sizing: border-box; }
+body { margin: 0; color: #111; font: 9.3pt/1.34 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+h1 { font-size: 23pt; line-height: 1.1; margin: 0 0 2pt; letter-spacing: -.01em; }
+.role { font-size: 11pt; color: #444; margin: 0 0 5pt; }
+.contact { font-size: 9pt; color: #333; margin: 0 0 1pt; }
+h2 { break-after: avoid; font-size: 8.6pt; text-transform: uppercase; letter-spacing: .12em; color: #444; border-bottom: .75pt solid #bbb; padding-bottom: 2pt; margin: 10pt 0 5pt; }
+p { margin: 0 0 4pt; }
+.lead { font-weight: 600; }
+.job { margin: 0 0 6.5pt; break-inside: avoid; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
+.row b { font-size: 10.2pt; }
+.when { color: #444; white-space: nowrap; font-size: 9pt; }
+.meta { color: #555; font-size: 8.8pt; margin: 0 0 2pt; }
+ul { margin: 2pt 0 0; padding-left: 13pt; }
+li { margin: 0 0 1.6pt; }
+.skill { margin: 0 0 3pt; }
+a { color: inherit; text-decoration: none; }
+"""
+
+
+def resume_html(lang):
+    H = C.HOME
+    li = SITE["linkedin"].replace("https://www.", "")
+    flat = lambda t: plain(re.sub(r"\{(\w+)\}", r"\1", tr(t, lang)))
+    jobs = []
+    for r in C.ROLES:
+        meta = flat(r["meta"]) + (f' ({"NASDAQ: ASPS"})' if r["id"] == "altisource" else "")
+        if r.get("meta_link"):
+            meta += " " + r["meta_link"][0]
+        bullets = "".join(f"<li>{h(flat(b))}</li>" for b in r["bullets"])
+        jobs.append(f'''<div class="job"><div class="row"><b>{h(flat(r["title"]))} · {h(r["company"])}</b><span class="when">{h(flat(r["when"]))}</span></div>
+<p class="meta">{h(meta)}</p><ul>{bullets}</ul></div>''')
+    skills = "".join(f'<p class="skill"><b>{h(tr(n, lang))}:</b> {h(tr(s, lang))}</p>' for _, n, s in C.CATEGORIES)
+    edu_t, edu_s = H["education"]
+    paras = "".join(f"<p>{h(tr(H['about'][i], lang))}</p>" for i in (2, 3, 4))
+    labels = {"en": ("Summary", "Experience", "Skills", "Education", "Languages"),
+              "es": ("Resumen", "Experiencia", "Habilidades", "Formación", "Idiomas")}[lang]
+    size = "Letter" if lang == "en" else "A4"
+    return f'''<!DOCTYPE html>
+<html lang="{lang}"><head><meta charset="utf-8"><title>Benjamin Fuller · {h(tr(H["role"], lang))}</title>
+<style>{RESUME_CSS % size}</style></head><body>
+<h1>Benjamin Fuller</h1>
+<p class="role">{h(tr(H["role"], lang))}</p>
+<p class="contact">{h(tr(H["location"], lang))}</p>
+<p class="contact">{li} · benfuller.me</p>
+<h2>{labels[0]}</h2><p class="lead">{h(tr(H["tagline"], lang))}</p>{paras}
+<h2>{labels[1]}</h2>{"".join(jobs)}
+<h2>{labels[2]}</h2>{skills}
+<h2>{labels[3]}</h2><p><b>{h(tr(edu_t, lang))}</b>, {h(edu_s)}</p>
+<h2>{labels[4]}</h2><p>{h(plain(tr(H["languages"], lang)).replace("Languages: ", "").replace("Idiomas: ", ""))}</p>
+</body></html>'''
+
+
+def build_resume(lang, pdf=False):
+    src = os.path.join(HERE, f"resume-{lang}.html")
+    with open(src, "w", encoding="utf-8") as f:
+        f.write(resume_html(lang))
+    if not pdf:
+        return
+    import subprocess
+    chrome = next((p for p in ("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "google-chrome", "chromium") if os.path.exists(p) or "/" not in p), None)
+    out = os.path.join(ROOT, CV[lang].lstrip("/"))
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    subprocess.run([chrome, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--print-to-pdf={out}",
+                    "file://" + src], check=True, capture_output=True)
+    print("wrote", os.path.relpath(out, ROOT))
+
+
 def validate():
     ids = {s[0] for s in C.SKILLS}
     for p in C.PROJECTS:
@@ -814,6 +903,7 @@ if __name__ == "__main__":
             build_company(lg, key)
         build_privacy(lg)
         build_timeline(lg)
+        build_resume(lg, pdf="--pdf" in sys.argv)
         build_index(lg)
     build_sitemap()
     build_consent_js()
