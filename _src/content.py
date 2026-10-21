@@ -396,6 +396,46 @@ for _p in PROJECTS:
     _p["problem"], _p["approach"] = CASES[_p["id"]]
     _p["at"] = AT[_p["id"]]
 
+
+# ----------------------------------------------------------------------------
+# "How I work": question and answer accordion on the home page.
+# ----------------------------------------------------------------------------
+
+FAQ = [
+    {"id": "lead",
+     "q": T("How do you lead?", "¿Cómo lideras?"),
+     "a": T("As a player-coach. I set the technical direction and the standards, then stay close enough to the work to review the hard implementations, unblock people, and step into a production problem when it helps. I lead through managers as a team grows, developing leaders rather than routing everything through me, but I never drift so far from the code that I lose the judgment to tell good technical decisions from expensive ones.",
+            "Como player-coach. Marco la dirección técnica y los estándares, y me mantengo lo bastante cerca del trabajo como para revisar las implementaciones difíciles, desbloquear a las personas e intervenir en un problema de producción cuando ayuda. A medida que un equipo crece, lidero a través de managers: desarrollo líderes en lugar de canalizarlo todo a través de mí, pero nunca me alejo tanto del código como para perder el criterio que distingue las buenas decisiones técnicas de las caras.")},
+    {"id": "ai-with-a-team",
+     "q": T("How do you actually use AI with a team?", "¿Cómo usas realmente la IA con un equipo?"),
+     "a": T("Every day, and deliberately. I build production agentic systems myself (multi-agent orchestration, RAG, tool calling, MCP), so I know where AI earns its keep and where a deterministic workflow is the better call. With a team, adoption is a people problem more than a tooling one: I find a champion, pair, train, and measure against cycle time and quality rather than lines of code. And I put the guardrails in first (evaluation, review discipline, least-privilege access, human-in-the-loop) so AI stays a multiplier instead of a cleanup generator.",
+            "Todos los días y de forma deliberada. Construyo yo mismo sistemas agénticos en producción (orquestación multiagente, RAG, llamadas a herramientas, MCP), así que sé dónde la IA se gana su sitio y dónde un flujo determinista es la mejor opción. Con un equipo, la adopción es más un problema de personas que de herramientas: busco a un impulsor, trabajo en pareja, formo y mido según el tiempo de ciclo y la calidad, no según las líneas de código. Y pongo primero las barreras (evaluación, disciplina de revisión, acceso de mínimo privilegio, humano en el circuito) para que la IA siga siendo un multiplicador y no un generador de limpieza.")},
+    {"id": "hire-and-grow",
+     "q": T("How do you hire and grow engineers?", "¿Cómo contratas y haces crecer a los ingenieros?"),
+     "a": T("I set a clear bar and protect it, then invest hard in the people I bring in. I've grown teams from one engineer to fifteen and directed 50+ through their managers, so I've learned to develop managers and senior leaders, not just individual contributors. I give direct, specific feedback, I create room for people to take on things slightly beyond their current level, and I treat retention as a design problem: reducing knowledge silos so a team stays resilient through growth and change.",
+            "Fijo un listón claro y lo protejo, y luego invierto a fondo en las personas que incorporo. He hecho crecer equipos de uno a quince ingenieros y he dirigido a más de 50 a través de sus managers, así que he aprendido a desarrollar managers y líderes senior, no solo a colaboradores individuales. Doy feedback directo y concreto, creo espacio para que las personas asuman cosas un poco por encima de su nivel actual y trato la retención como un problema de diseño: reducir los silos de conocimiento para que un equipo se mantenga resistente durante el crecimiento y el cambio.")},
+    {"id": "modernize",
+     "q": T("How do you modernize a platform without stopping the business?", "¿Cómo modernizas una plataforma sin detener el negocio?"),
+     "a": T("Incrementally, and with a visible plan. I've led cloud modernizations, legacy consolidations, and acquired-product integrations where the business had to keep running the whole time. I map the technical debt, sequence the work so each step ships value and nothing goes dark, and I'm honest about when to extend, when to refactor, and when to replace. The goal is to make the platform stronger as it scales without ever handing customers a disruption.",
+            "De forma incremental y con un plan visible. He liderado modernizaciones a la nube, consolidaciones de sistemas heredados e integraciones de productos adquiridos en las que el negocio tenía que seguir funcionando todo el tiempo. Mapeo la deuda técnica, secuencio el trabajo para que cada paso aporte valor y nada se quede a oscuras, y soy honesto sobre cuándo ampliar, cuándo refactorizar y cuándo reemplazar. El objetivo es fortalecer la plataforma a medida que escala sin entregar nunca una interrupción a los clientes.")},
+    {"id": "founder-to-role",
+     "q": T("You've been a founder. Why take a role instead of starting another company?", "Has sido fundador: ¿por qué aceptar un puesto en lugar de crear otra empresa?"),
+     "a": T("Because the work I most enjoy is building the product and the team, and I can do that inside one company I believe in without needing to own the cap table to feel ownership. As a founder I sat at the leadership table and carried outcomes and unit economics directly, so I bring that operator's mindset to a role. I just get to point all of it at one mission instead of running the whole business at once.",
+            "Porque el trabajo que más disfruto es construir el producto y el equipo, y puedo hacerlo dentro de una empresa en la que creo sin necesitar ser dueño del cap table para sentir la propiedad. Como fundador me senté en la mesa de dirección y asumí directamente los resultados y la economía unitaria, así que aporto esa mentalidad de operador a un puesto. Simplemente puedo dirigir todo eso a una sola misión en lugar de llevar todo el negocio a la vez.")},
+    {"id": "remote",
+     "q": T("How do you work as a remote, distributed leader?", "¿Cómo trabajas como líder remoto y distribuido?"),
+     "a": T("It's how I've worked for years: teams across the US, India, and Europe, led through their leaders. Remote-first rewards clarity: good written communication, lightweight process for planning and incidents, and trust with accountability rather than presence as a proxy for progress. I'm a US citizen based in Barcelona with full EU work authorization, so I can join teams on either side of the Atlantic without sponsorship.",
+            "Es como llevo trabajando años: equipos repartidos entre EE. UU., India y Europa, liderados a través de sus líderes. El trabajo remoto premia la claridad: buena comunicación escrita, procesos ligeros para la planificación y los incidentes, y confianza con responsabilidad, en lugar de la presencia como indicador del progreso. Soy ciudadano estadounidense residente en Barcelona con autorización de trabajo plena en la UE, así que puedo incorporarme a equipos a ambos lados del Atlántico sin patrocinio.")},
+    {"id": "next-role",
+     "q": T("What are you looking for in your next role?", "¿Qué buscas en tu próximo puesto?"),
+     "a": T("A real leadership seat where I can be hands-on, at a company where AI is genuinely part of how the product and the team get built. I do my best work in regulated or operationally complex domains (fintech, proptech, healthcare-adjacent, data platforms) and at the stage where growth is stretching how the team works and someone has to build the operating rhythm for what's next. I care most about the mission, the people, and getting to do the work, not the title.",
+            "Un puesto de liderazgo real en el que pueda seguir con las manos en el código, en una empresa donde la IA forme parte genuina de cómo se construyen el producto y el equipo. Rindo mejor en ámbitos regulados u operativamente complejos (fintech, proptech, afines a la salud, plataformas de datos) y en la etapa en la que el crecimiento tensiona cómo trabaja el equipo y alguien tiene que construir el ritmo operativo de lo que viene. Lo que más me importa es la misión, las personas y poder hacer el trabajo, no el título.")},
+    {"id": "hands-on",
+     "q": T("Why do you stay hands-on as a leader?", "¿Por qué sigues con las manos en el código siendo líder?"),
+     "a": T("Because it's how I keep honest judgment and credibility. Building things myself is how I can tell the difference between AI that's buying real leverage and AI that's quietly creating a cleanup job later, how I stay current on the thing that's changing fastest, and how I keep the trust of the engineers I lead. A leader who's drifted away from the work loses the ability to make the calls that matter most.",
+            "Porque es como mantengo un criterio honesto y mi credibilidad. Construir cosas yo mismo es como distingo entre la IA que compra apalancamiento real y la que crea en silencio un trabajo de limpieza para más adelante, cómo me mantengo al día en lo que cambia más rápido y cómo conservo la confianza de los ingenieros a los que lidero. Un líder que se ha alejado del trabajo pierde la capacidad de tomar las decisiones que más importan.")},
+]
+
 # ----------------------------------------------------------------------------
 # Company pages. Each page is a list of `blocks` (heading, optional paragraph,
 # bullet list and screenshot) plus `links`, `press`, and the role's own bullets,
@@ -648,7 +688,8 @@ HOME = {
 UI = {
     "nav": [("about", T("About", "Sobre mí")), ("experience", T("Experience", "Experiencia")),
             ("timeline", T("Timeline", "Cronología")), ("projects", T("Projects", "Proyectos")),
-            ("skills", T("Skills", "Habilidades")), ("contact", T("Contact", "Contacto"))],
+            ("skills", T("Skills", "Habilidades")), ("how-i-work", T("How I work", "Cómo trabajo")),
+            ("contact", T("Contact", "Contacto"))],
     "company_nav": [("about", T("About", "Sobre mí")), ("experience", T("Experience", "Experiencia")),
                     ("timeline", T("Timeline", "Cronología")), ("projects", T("Projects", "Proyectos")),
                     ("contact", T("Contact", "Contacto"))],
@@ -657,7 +698,8 @@ UI = {
     "search_ph": T("Jump to a role, project, skill…", "Ir a un puesto, proyecto, habilidad…"),
     "search_empty": T("Nothing matches. Try a technology, company or year.", "Sin resultados. Prueba con una tecnología, empresa o año."),
     "search_hint": T("↑↓ to move · Enter to open · Esc to close", "↑↓ para moverte · Intro para abrir · Esc para cerrar"),
-    "search_types": {"section": T("Sections", "Secciones"), "role": T("Experience", "Experiencia"),
+    "faq_h": T("How I work", "Cómo trabajo"),
+    "search_types": {"faq": T("How I work", "Cómo trabajo"), "section": T("Sections", "Secciones"), "role": T("Experience", "Experiencia"),
                      "project": T("Projects", "Proyectos"), "skill": T("Skills", "Habilidades"),
                      "press": T("Press", "Prensa"), "action": T("Actions", "Acciones")},
     "lang_name": T("English", "Español"),

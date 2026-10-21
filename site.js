@@ -17,6 +17,12 @@
     node.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   }
 
+  // a link like #q-lead opens that answer
+  (function () {
+    var t = location.hash && document.getElementById(location.hash.slice(1));
+    if (t && t.tagName === 'DETAILS') t.open = true;
+  })();
+
   /* ------------------------------------------------------------ filters */
   function applyFilters(updateUrl) {
     var n = 0;
@@ -73,7 +79,7 @@
     if (node) {
       var group = node.closest('details'); if (group) group.open = true;
       history.pushState(null, '', u.pathname + u.hash);
-      scrollTo(node); flash(node.classList.contains('job') || node.classList.contains('proj') ? node : null);
+      scrollTo(node); flash(node.classList.contains('job') || node.classList.contains('proj') || node.classList.contains('qa') ? node : null);
       return true;
     }
     return false;
@@ -150,7 +156,7 @@
 
   /* ------------------------------------------------------------- search */
   var idx = null, palette = null, input, listEl, results = [], active = 0, lastFocus = null;
-  var ORDER = { role: 5, project: 4, skill: 3, section: 2, press: 1, action: 0 };
+  var ORDER = { role: 5, project: 4, faq: 3, skill: 3, section: 2, press: 1, action: 0 };
   var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
   function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }

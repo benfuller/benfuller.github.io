@@ -504,6 +504,20 @@ def skills_html(lang):
     return "\n".join(out)
 
 
+def faq_html(lang):
+    items = "\n".join(
+        f'''        <details class="qa" id="q-{q["id"]}">
+          <summary>{h(tr(q["q"], lang))}</summary>
+          <p>{h(tr(q["a"], lang))}</p>
+        </details>''' for q in C.FAQ)
+    return f'''    <section id="how-i-work">
+      <h2>{h(ui("faq_h", lang))}</h2>
+      <div class="qa-list">
+{items}
+      </div>
+    </section>'''
+
+
 def jsonld_person(lang):
     return {
         "@context": "https://schema.org",
@@ -593,6 +607,8 @@ def build_home(lang):
       <p class="lede">{h(ui("skills_lede", lang))}</p>
 {skills_html(lang)}
     </section>
+
+{faq_html(lang)}
 
     <section id="press">
       <h2>{h(ui("press_h", lang))}</h2>
@@ -760,6 +776,8 @@ def build_index(lang):
         add("role", f'{plain(tr(r["title"], lang))} · {r["company"]}', tr(r["when"], lang), f"{base}#{r['id']}", k)
         add("role", f'{r["company"]}: ' + ("company page" if lang == "en" else "página de la empresa"),
             tr(r["when"], lang), page_path(lang, r["page"]), r["company"] + " screenshots links")
+    for q in C.FAQ:
+        add("faq", tr(q["q"], lang), ui("faq_h", lang), f"{base}#q-{q['id']}", tr(q["a"], lang))
     for m_ in C.MILESTONES:
         r = ROLE[m_["role"]]
         add("role", tr(m_["title"], lang), f'{MONTHS_SHORT[lang][m_["date"][1] - 1]} {m_["date"][0]}',
