@@ -50,6 +50,16 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://benfuller.me/es/altisource/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://benfuller.me/altisource/"/>
   </url>
+  <url><loc>https://benfuller.me/timeline/</loc><lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://benfuller.me/timeline/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://benfuller.me/es/cronologia/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://benfuller.me/timeline/"/>
+  </url>
+  <url><loc>https://benfuller.me/es/cronologia/</loc><lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://benfuller.me/timeline/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://benfuller.me/es/cronologia/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://benfuller.me/timeline/"/>
+  </url>
   <url><loc>https://benfuller.me/privacy/</loc><lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://benfuller.me/privacy/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://benfuller.me/es/privacidad/"/>

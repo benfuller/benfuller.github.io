@@ -60,8 +60,11 @@ def home(lang):
     return PREFIX[lang] + "/"
 
 
+SLUGS = {"privacy": C.PRIVACY["slug"], "timeline": {"en": "timeline", "es": "cronologia"}}
+
+
 def page_path(lang, key):
-    slug = C.PRIVACY["slug"][lang] if key == "privacy" else key
+    slug = SLUGS[key][lang] if key in SLUGS else key
     return f"{PREFIX[lang]}/{slug}/"
 
 
@@ -198,7 +201,8 @@ SEARCH_ICON = ('<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="1
 
 def header(lang, nav_items, alts):
     base = home(lang)
-    nav = "\n        ".join(a(f"{base}#{k}", tr(v, lang)) for k, v in nav_items)
+    nav = "\n        ".join(
+        a(page_path(lang, "timeline") if k == "timeline" else f"{base}#{k}", tr(v, lang)) for k, v in nav_items)
     other = OTHER[lang]
     langs = []
     for lg in LANGS:
@@ -264,55 +268,91 @@ def write(rel, text):
         f.write(text)
 
 
-# ---------------------------------------------------------------- timeline
+# ---------------------------------------------------------------- timeline page
 
-def timeline_html(lang):
-    now = datetime.date.today().year
-    y0 = min(r["span"][0] for r in C.ROLES)
-    y1 = now
-    n = y1 - y0 + 1
-    ticks = "".join(f"<li>&rsquo;{str(y)[2:]}</li>" for y in range(y0, y1 + 1))
-    rows = []
-    roles = sorted(C.ROLES, key=lambda r: (r["span"][0], r["span"][1] or now))
+MONTHS_SHORT = {"en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                "es": ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]}
 
-    def span_cols(a_, b_):
-        b_ = b_ or now
-        return a_ - y0 + 1, b_ - y0 + 2
 
-    for r in roles:
-        s_, e_ = span_cols(*r["span"])
-        yrs = h(tr(r["when"], lang))
-        rows.append(f'''        <li class="tl-row job" data-type="job" data-role="{r["id"]}" style="--s:{s_};--e:{e_}">
-          <div class="lab"><a href="#{r["id"]}" data-nav>{h(tr(r["title"], lang))} · {h(r["company"])}</a><span class="yrs">{yrs}</span></div>
-          <div class="track"><span class="bar"></span></div>
-        </li>''')
-        for p in (p for p in C.PROJECTS if p["role"] == r["id"]):
-            rows.append(f'''        <li class="tl-row project" data-type="project" data-role="{r["id"]}" style="--s:{s_};--e:{e_}" hidden>
-          <div class="lab"><a href="{home(lang)}?project={p["id"]}#p-{p["id"]}" data-nav>{h(tr(p["title"], lang))}</a><span class="yrs">{h(r["company"])} · {yrs}</span></div>
-          <div class="track"><span class="bar"></span></div>
-        </li>''')
-    for p in sorted(C.HOME["press"], key=lambda p: p["date"]):
-        yr, mo = p["date"]
-        col = yr - y0 + 1
-        when = tr(p["source"], lang)
-        rows.append(f'''        <li class="tl-row press" data-type="press" style="--s:{col};--e:{col + 1}">
-          <div class="lab"><a href="{esc(p["url"])}" rel="noopener">{h(tr(p["title"], lang))}</a><span class="yrs">{h(when)}</span></div>
-          <div class="track"><span class="bar dot"></span></div>
-        </li>''')
+def timeline_events():
+    """Newest-first list of events. Jobs only have years, so a start sits at the
+    beginning of its year and an end near the end; projects use C.AT estimates."""
+    now = datetime.date.today()
+    ev = []
+    for i, r in enumerate(C.ROLES):
+        sy, ey = r["span"]
+        ev.append({"pos": sy + 0.0, "tie": i, "type": "job", "kind": "start", "role": r["id"], "year": sy})
+        if ey:
+            ev.append({"pos": ey + 0.95, "tie": i, "type": "job", "kind": "end", "role": r["id"], "year": ey})
+        else:
+            ev.append({"pos": now.year + (now.month - 1) / 12 + 0.06, "tie": i, "type": "job", "kind": "now",
+                       "role": r["id"], "year": now.year})
+    for i, p in enumerate(C.PROJECTS):
+        y, m = p["at"]
+        ev.append({"pos": y + (m - 1) / 12 + 0.02, "tie": i, "type": "project", "kind": "project", "project": p,
+                   "role": p["role"], "year": y})
+    for i, p in enumerate(C.HOME["press"]):
+        y, m = p["date"]
+        ev.append({"pos": y + (m - 1) / 12 + 0.01, "tie": i, "type": "press", "kind": "press", "press": p,
+                   "year": y, "month": m})
+    ev.sort(key=lambda e: (-e["pos"], e["tie"]))
+    return ev
+
+
+def event_html(e, lang):
+    base = home(lang)
+    if e["type"] == "job":
+        r = ROLE[e["role"]]
+        if e["kind"] == "now":
+            k, d = ui("tl_now", lang), ui("present", lang)
+        else:
+            k, d = ui("tl_started" if e["kind"] == "start" else "tl_ended", lang), str(e["year"])
+        title = f'{h(tr(r["title"], lang))} · {h(r["company"])}'
+        return (f'<li class="ev job {e["kind"]}" data-type="job" data-role="{r["id"]}">'
+                f'<div class="ev-meta"><span class="k">{h(k)}</span><span class="d">{h(d)}</span></div>'
+                f'<a class="ttl" href="{page_path(lang, r["page"])}">{title}</a></li>')
+    if e["type"] == "project":
+        p = e["project"]
+        r = ROLE[p["role"]]
+        return (f'<li class="ev project" data-type="project" data-role="{r["id"]}">'
+                f'<div class="ev-meta"><span class="k">{h(ui("tl_kind_project", lang))}</span><span class="d">~{e["year"]}</span></div>'
+                f'<a class="ttl" href="{base}?project={p["id"]}#p-{p["id"]}">{h(tr(p["title"], lang))}</a>'
+                f'<span class="sub">{h(r["company"])}</span></li>')
+    p = e["press"]
+    when = f'{MONTHS_SHORT[lang][e["month"] - 1]} {e["year"]}'
+    return (f'<li class="ev press" data-type="press">'
+            f'<div class="ev-meta"><span class="k">{h(ui("tl_kind_press", lang))}</span><span class="d">{h(when)}</span></div>'
+            f'<a class="ttl" href="{esc(p["url"])}" rel="noopener">{h(tr(p["title"], lang))}</a>'
+            f'<span class="sub">{h(tr(p["source"], lang))}</span></li>')
+
+
+def build_timeline(lang):
+    items, last = [], None
+    for e in timeline_events():
+        y = int(e["pos"])
+        if y != last:
+            items.append(f'<li class="yr" aria-hidden="true"><span>{y}</span></li>')
+            last = y
+        items.append(event_html(e, lang))
     toggles = "".join(
-        f'''<label class="tl-chip"><input type="checkbox" data-tl="{k}"{" checked" if on else ""}><span>{h(ui("tl_" + k, lang))}</span></label>'''
-        for k, on in (("job", True), ("project", False), ("press", True)))
-    return f'''    <section id="timeline">
-      <h2>{h(ui("timeline_h", lang))}</h2>
-      <p class="lede">{h(ui("timeline_lede", lang))}</p>
-      <fieldset class="tl-toggles" id="tl-toggles" hidden><legend>{h(ui("tl_show", lang))}</legend>{toggles}</fieldset>
-      <div class="tl" id="tl" style="--n:{n}">
-        <ol class="tl-axis" aria-hidden="true">{ticks}</ol>
-        <ol class="tl-rows">
-{chr(10).join(rows)}
-        </ol>
-      </div>
-    </section>'''
+        f'''<label class="tl-chip"><input type="checkbox" data-tl="{k}" checked><span>{h(ui("tl_" + k, lang))}</span></label>'''
+        for k in ("job", "project", "press"))
+    legend = "".join(f'<li data-role="{r["id"]}"><i></i>{h(r["company"])}</li>' for r in C.ROLES)
+    base = home(lang)
+    body = f'''    <p class="crumb">{a(base, "Benjamin Fuller")} / {h(ui("timeline_h", lang))}</p>
+    <h1 class="page-title">{h(ui("timeline_h", lang))}</h1>
+    <p class="page-sub">{h(ui("timeline_lede", lang))}</p>
+    <fieldset class="tl-toggles" id="tl-toggles" hidden><legend>{h(ui("tl_show", lang))}</legend>{toggles}</fieldset>
+    <ul class="legend" aria-label="{"Colors" if lang == "en" else "Colores"}">{legend}<li class="lg-press"><i></i>{h(ui("tl_press", lang))}</li></ul>
+    <ol class="vt" id="vt">
+{chr(10).join(items)}
+    </ol>
+    <p class="tl-note">{h(ui("timeline_note", lang))}</p>
+    <p class="back">{a(f"{base}#experience", ui("back", lang))}</p>'''
+    alts = {lg: page_path(lg, "timeline") for lg in LANGS}
+    title = f'{ui("timeline_h", lang)} · Benjamin Fuller'
+    out = layout(lang, "timeline", title, tr(C.UI["tl_desc"], lang), alts, body, C.UI["company_nav"])
+    write(page_path(lang, "timeline").strip("/") + "/index.html", out)
 
 
 # ---------------------------------------------------------------- home
@@ -493,9 +533,8 @@ def build_home(lang):
       <h2>{h(ui("exp_h", lang))}</h2>
 
 {roles}
+      <p class="more">{a(page_path(lang, "timeline"), ui("timeline_link", lang))}</p>
     </section>
-
-{timeline_html(lang)}
 
     <section id="projects">
       <h2>{h(ui("projects_h", lang))}</h2>
@@ -667,7 +706,8 @@ def build_index(lang):
         items.append({"t": t, "n": n, "s": s, "u": u, "k": k, **extra})
 
     for key, label in C.UI["nav"]:
-        add("section", tr(label, lang), "", f"{base}#{key}")
+        add("section", tr(label, lang), "", page_path(lang, "timeline") if key == "timeline" else f"{base}#{key}",
+            "history chronology dates" if key == "timeline" else "")
     add("section", tr(C.UI["what_h"], lang), "", f"{base}#what-i-do")
     add("section", tr(C.UI["edu_h"], lang), "", f"{base}#education", "university wisconsin")
     for r in C.ROLES:
@@ -686,7 +726,8 @@ def build_index(lang):
         add("skill", tr(s[2], lang), f'{tr(CAT[s[1]]["name"], lang)} · ' + ui("used_in", lang, p=n, r=rr),
             f"{base}?skill={sid}#projects", " ".join(s[3] + [tr(CAT[s[1]]["name"], lang)]))
     for p in C.HOME["press"]:
-        add("press", tr(p["title"], lang), tr(p["source"], lang), p["url"], "acquire inunity nymblr nimbler", x=1)
+        add("press", tr(p["title"], lang), tr(p["source"], lang), p["url"],
+            " ".join([tr(p["source"], lang), plain(tr(p["blurb"], lang)), "future 5 acquire elteve inunity nymblr nimbler"]), x=1)
     add("action", ui("print", lang), "", "#print", "pdf resume cv", a="print")
     add("action", tr(C.UI["actions"]["lang"], lang), "", page_path(OTHER[lang], "x") if False else home(OTHER[lang]),
         "language idioma español english")
@@ -698,6 +739,7 @@ def build_index(lang):
 def build_sitemap():
     today = datetime.date.today().isoformat()
     pages = [{lg: home(lg) for lg in LANGS}] + [{lg: page_path(lg, k) for lg in LANGS} for k in C.COMPANY_PAGES]
+    pages.append({lg: page_path(lg, "timeline") for lg in LANGS})
     pages.append({lg: page_path(lg, "privacy") for lg in LANGS})
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
@@ -739,6 +781,7 @@ if __name__ == "__main__":
         for key in C.COMPANY_PAGES:
             build_company(lg, key)
         build_privacy(lg)
+        build_timeline(lg)
         build_index(lg)
     build_sitemap()
     build_consent_js()

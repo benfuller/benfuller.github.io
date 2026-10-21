@@ -367,8 +367,17 @@ CASES = {
         T("Led the technical side of roughly seven M&A integrations: due diligence, integration, and separation, bringing acquired systems and distributed teams onto the platform.",
           "Lideré la parte técnica de cerca de siete integraciones de M&A: due diligence, integración y separación, incorporando a la plataforma los sistemas adquiridos y los equipos distribuidos.")),
 }
+# Where each project sits on the timeline page, as (year, month). These are
+# estimates inside each role's dates; the page labels them "~". Edit freely.
+AT = {
+    "re-decision-engine": (2025, 3), "billing-agents": (2024, 6), "ai-governance": (2025, 9), "elteve": (2022, 5),
+    "nymblr-ranking": (2022, 7), "nymblr-integration": (2023, 11),
+    "onemata-streaming": (2020, 10), "onemata-quality": (2021, 6), "onemata-portal": (2022, 1),
+    "altisource-aws": (2016, 6), "altisource-avm": (2015, 6), "altisource-buybox": (2017, 9), "altisource-ma": (2018, 6),
+}
 for _p in PROJECTS:
     _p["problem"], _p["approach"] = CASES[_p["id"]]
+    _p["at"] = AT[_p["id"]]
 
 # ----------------------------------------------------------------------------
 # Company pages. Each page is a list of `blocks` (heading, optional paragraph,
@@ -402,7 +411,14 @@ COMPANY_PAGES = {
                        "link_text": LIVE},
         }],
         "links": [(T("InsidePartners.ai website", "Sitio web de InsidePartners.ai"), "https://www.insidepartners.ai")],
-        "press": [],
+        "press": [
+            {"title": T("Elteve Aims to Help Shopify Brands Grow, Improve Customer Relationships",
+                        "Elteve Aims to Help Shopify Brands Grow, Improve Customer Relationships"),
+             "url": "https://builtincolorado.com/2022/11/04/colorado-future-5-startup-elteve-q4-2022",
+             "source": T("Built In Colorado, November 2022", "Built In Colorado, noviembre de 2022"),
+             "blurb": T("Elteve, which I co-founded as CTO, named one of Colorado's Future 5 startups.",
+                        "Elteve, que cofundé como CTO, elegida una de las startups Future 5 de Colorado.")},
+        ],
     },
     "nymblr": {
         "role": "nymblr",
@@ -576,6 +592,12 @@ HOME = {
          "source": T("Acquire.com, March 2024", "Acquire.com, marzo de 2024"), "date": (2024, 3),
          "blurb": T("The story of building Nimbler (formerly {Nymblr}) with Koko Zarov and selling it to Inunity.",
                     "La historia de construir Nimbler (antes {Nymblr}) con Koko Zarov y venderla a Inunity.")},
+        {"title": T("Elteve Aims to Help Shopify Brands Grow, Improve Customer Relationships",
+                    "Elteve Aims to Help Shopify Brands Grow, Improve Customer Relationships"),
+         "url": "https://builtincolorado.com/2022/11/04/colorado-future-5-startup-elteve-q4-2022",
+         "source": T("Built In Colorado, November 2022", "Built In Colorado, noviembre de 2022"), "date": (2022, 11),
+         "blurb": T("Elteve, which I co-founded as CTO, named one of Colorado's Future 5 startups.",
+                    "Elteve, que cofundé como CTO, elegida una de las startups Future 5 de Colorado.")},
     ],
     "education": (T("B.S. Management of Computer Systems", "B.S. en Gestión de Sistemas Informáticos"),
                   "University of Wisconsin-Whitewater, 2011"),
@@ -592,7 +614,8 @@ UI = {
             ("timeline", T("Timeline", "Cronología")), ("projects", T("Projects", "Proyectos")),
             ("skills", T("Skills", "Habilidades")), ("contact", T("Contact", "Contacto"))],
     "company_nav": [("about", T("About", "Sobre mí")), ("experience", T("Experience", "Experiencia")),
-                    ("projects", T("Projects", "Proyectos")), ("contact", T("Contact", "Contacto"))],
+                    ("timeline", T("Timeline", "Cronología")), ("projects", T("Projects", "Proyectos")),
+                    ("contact", T("Contact", "Contacto"))],
     "search": T("Search", "Buscar"),
     "search_aria": T("Search this site", "Buscar en este sitio"),
     "search_ph": T("Jump to a role, project, skill…", "Ir a un puesto, proyecto, habilidad…"),
@@ -631,7 +654,17 @@ UI = {
     "related_projects": T("{n} related projects →", "{n} proyectos relacionados →"),
     "more_page": T("Company page: screenshots, links and details →", "Página de la empresa: capturas, enlaces y detalles →"),
     "timeline_h": T("Timeline", "Cronología"),
-    "timeline_lede": T("Roles, projects and press on one axis. Choose what to show.", "Puestos, proyectos y prensa en un mismo eje. Elige qué mostrar."),
+    "timeline_lede": T("My roles, projects and press in order on one line, newest first. Choose what to show.",
+                       "Mis puestos, proyectos y prensa en orden sobre una misma línea, de lo más reciente a lo más antiguo. Elige qué mostrar."),
+    "timeline_note": T("Job dates are the years on my resume. Project positions are approximate (marked ~) and sit inside the dates of the job they belong to.",
+                       "Las fechas de los puestos son los años de mi currículum. La posición de los proyectos es aproximada (marcada con ~) y queda dentro de las fechas del puesto al que pertenecen."),
+    "timeline_link": T("See the timeline →", "Ver la cronología →"),
+    "tl_started": T("Started", "Inicio"),
+    "tl_ended": T("Ended", "Fin"),
+    "tl_now": T("Ongoing", "En curso"),
+    "tl_kind_project": T("Project", "Proyecto"),
+    "tl_kind_press": T("Press", "Prensa"),
+    "tl_desc": T("Roles, projects and press on a vertical timeline.", "Puestos, proyectos y prensa en una cronología vertical."),
     "tl_show": T("Show", "Mostrar"),
     "tl_job": T("Jobs", "Puestos"),
     "tl_project": T("Projects", "Proyectos"),

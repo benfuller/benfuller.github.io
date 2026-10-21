@@ -88,11 +88,17 @@
   var tl = document.getElementById('tl-toggles');
   if (tl) {
     tl.hidden = false;
-    var rowsAll = [].slice.call(document.querySelectorAll('#tl .tl-row'));
+    var items = [].slice.call(document.querySelectorAll('#vt > li'));
     var syncTl = function () {
       var on = {};
       [].forEach.call(tl.querySelectorAll('input[data-tl]'), function (i) { on[i.dataset.tl] = i.checked; });
-      rowsAll.forEach(function (r) { r.hidden = !on[r.dataset.type]; });
+      items.forEach(function (li) { if (li.dataset.type) li.hidden = !on[li.dataset.type]; });
+      items.forEach(function (li, i) {            // hide a year label when none of its events are visible
+        if (!li.classList.contains('yr')) return;
+        var any = false;
+        for (var k = i + 1; k < items.length && !items[k].classList.contains('yr'); k++) if (!items[k].hidden) any = true;
+        li.hidden = !any;
+      });
     };
     tl.addEventListener('change', syncTl);
     syncTl();
