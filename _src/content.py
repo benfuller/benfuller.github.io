@@ -33,8 +33,8 @@ CATEGORIES = [
      T("Engineering org design, scaling teams through managers, hiring and coaching, distributed/global teams.",
        "Diseño de organizaciones de ingeniería, escalar equipos a través de managers, contratación y coaching, equipos distribuidos y globales.")),
     ("ai", T("AI-native engineering", "Ingeniería nativa de IA"),
-     T("Multi-agent systems, RAG, MCP, tool/function calling, vector search; AI coding tools; adoption enablement and governance (NIST AI RMF).",
-       "Sistemas multiagente, RAG, MCP, llamadas a herramientas/funciones, búsqueda vectorial; herramientas de código con IA; habilitación de adopción y gobernanza (NIST AI RMF).")),
+     T("Multi-agent systems, RAG, MCP, tool/function calling, vector search; conversational and voice AI, workflow automation, autonomous engineering with human-in-the-loop review; AI coding tools; adoption enablement and governance (NIST AI RMF).",
+       "Sistemas multiagente, RAG, MCP, llamadas a herramientas/funciones, búsqueda vectorial; IA conversacional y de voz, automatización de flujos de trabajo, ingeniería autónoma con humano en el circuito; herramientas de código con IA; habilitación de adopción y gobernanza (NIST AI RMF).")),
     ("platforms", T("Platforms & scale", "Plataformas y escala"),
      T("Event-driven and near-real-time systems, Kafka, Spark/EMR, sub-second retrieval, high availability, observability.",
        "Sistemas orientados a eventos y casi en tiempo real, Kafka, Spark/EMR, recuperación en menos de un segundo, alta disponibilidad, observabilidad.")),
@@ -42,12 +42,12 @@ CATEGORIES = [
      T("AWS (serverless, S3, ECS and ECS Spot, EMR, Redshift) and Google Cloud, Elasticsearch, CI/CD, FinOps/cost optimization, BigQuery and Looker.",
        "AWS (serverless, S3, ECS y ECS Spot, EMR, Redshift) y Google Cloud, Elasticsearch, CI/CD, FinOps y optimización de costes, BigQuery y Looker.")),
     ("languages", T("Languages & frameworks", "Lenguajes y frameworks"),
-     T("Python, TypeScript/React, Next.js, SQL; Shopify apps and Chrome extensions.", "Python, TypeScript/React, Next.js, SQL; apps de Shopify y extensiones de Chrome.")),
+     T("Python, TypeScript/React, Node.js, Next.js, SQL; Shopify apps and Chrome extensions.", "Python, TypeScript/React, Node.js, Next.js, SQL; apps de Shopify y extensiones de Chrome.")),
     ("regulated", T("Regulated & secure", "Regulado y seguro"),
      T("SOC 2, HIPAA/CLIA, regulated financial data.", "SOC 2, HIPAA/CLIA, datos financieros regulados.")),
     ("product", T("Product & commercial", "Producto y negocio"),
-     T("Unit economics, roadmaps, cross-functional partnership, real estate and proptech.",
-       "Economía unitaria, roadmaps, colaboración transversal, sector inmobiliario y proptech.")),
+     T("Unit economics, roadmaps, cross-functional partnership, real estate and proptech, civic and urban tech.",
+       "Economía unitaria, roadmaps, colaboración transversal, sector inmobiliario y proptech, tecnología cívica y urbana.")),
 ]
 
 # (id, category, name, aliases)
@@ -69,6 +69,10 @@ SKILLS = [
     ("claude-code", "ai", T("Claude Code", "Claude Code"), ["ai coding", "agentic coding"]),
     ("cursor", "ai", T("Cursor", "Cursor"), ["ai coding", "ide"]),
     ("governance", "ai", T("AI governance (NIST AI RMF)", "Gobernanza de IA (NIST AI RMF)"), ["responsible ai", "nist", "risk"]),
+    ("conversational-ai", "ai", T("Conversational AI", "IA conversacional"), ["chatbot", "assistant", "llm", "chat"]),
+    ("voice-ai", "ai", T("Voice AI", "IA de voz"), ["voice agent", "phone", "speech", "receptionist"]),
+    ("workflow-automation", "ai", T("Workflow automation", "Automatización de flujos de trabajo"), ["automation", "workflows", "process automation", "admin"]),
+    ("autonomous-eng", "ai", T("Autonomous engineering", "Ingeniería autónoma"), ["agentic engineering", "ai agents", "coding agents", "autonomous"]),
     ("evals", "ai", T("Evaluation & guardrails", "Evaluación y guardrails"), ["evals", "safety"]),
     ("hitl", "ai", T("Human-in-the-loop review", "Revisión con humano en el circuito"), ["human in the loop"]),
     ("enablement", "ai", T("AI adoption enablement", "Habilitación de adopción de IA"), ["training", "adoption"]),
@@ -101,6 +105,7 @@ SKILLS = [
     ("typescript", "languages", T("TypeScript", "TypeScript"), ["javascript", "js", "ts"]),
     ("react", "languages", T("React", "React"), ["frontend"]),
     ("sql", "languages", T("SQL", "SQL"), ["database", "queries"]),
+    ("nodejs", "languages", T("Node.js", "Node.js"), ["node", "javascript", "backend"]),
     ("nextjs", "languages", T("Next.js", "Next.js"), ["nextjs", "react", "frontend", "dashboard"]),
     ("shopify", "languages", T("Shopify apps", "Apps de Shopify"), ["ecommerce", "app"]),
     ("chrome-extension", "languages", T("Chrome extensions", "Extensiones de Chrome"), ["browser extension"]),
@@ -113,6 +118,7 @@ SKILLS = [
     ("unit-economics", "product", T("Unit economics", "Economía unitaria"), ["pricing", "margins"]),
     ("roadmaps", "product", T("Roadmaps", "Roadmaps"), ["strategy", "prioritization"]),
     ("cross-functional", "product", T("Cross-functional partnership", "Colaboración transversal"), ["stakeholders"]),
+    ("civic-tech", "product", T("Civic / urban tech", "Tecnología cívica y urbana"), ["civic", "urban", "city", "improvement district", "government"]),
     ("proptech", "product", T("Real estate & proptech", "Sector inmobiliario y proptech"), ["real estate", "property"]),
     ("avm", "product", T("Automated valuation (AVM)", "Valoración automatizada (AVM)"), ["valuation", "underwriting", "rental"]),
     ("product", "product", T("Commercial judgment", "Criterio comercial"), ["product", "product & commercial", "go to market", "business"]),
@@ -147,7 +153,8 @@ ROLES = [
         "skills": ["multi-agent", "rag", "mcp", "tool-calling", "vector-search", "claude", "claude-code", "cursor",
                    "governance", "evals", "hitl", "enablement", "least-priv", "gcp", "bigquery", "looker", "appfolio",
                    "quickbooks", "proptech", "unit-economics", "cross-functional", "aws", "team", "ecommerce", "logistics",
-                   "react", "nextjs", "shopify", "chrome-extension"],
+                   "react", "nextjs", "shopify", "chrome-extension", "conversational-ai", "voice-ai",
+                   "workflow-automation", "autonomous-eng", "civic-tech", "typescript", "nodejs"],
     },
     {
         "id": "nymblr", "company": "Nymblr", "page": "nymblr", "span": (2022, 2025),
@@ -228,6 +235,34 @@ MILESTONES = [
 
 
 PROJECTS = [
+    {"id": "portfolio-platform", "role": "insidepartners", "when": T("2025 – Present", "2025 – Actualidad"), "status": "progress",
+     "title": T("Real-estate portfolio evaluation and trading platform", "Plataforma de evaluación y compraventa de carteras inmobiliarias"),
+     "summary": T("A platform to evaluate and trade a single-family-rental portfolio, built with autonomous, human-in-the-loop engineering.",
+                  "Una plataforma para evaluar y operar una cartera de viviendas unifamiliares en alquiler, construida con ingeniería autónoma y con humano en el circuito."),
+     "outcome": T("In active development; the autonomous-engineering-with-HITL approach is itself a core deliverable.",
+                  "En desarrollo activo; el enfoque de ingeniería autónoma con humano en el circuito es en sí mismo un entregable central."),
+     "skills": ["proptech", "autonomous-eng", "hitl", "multi-agent", "typescript", "react"], "stack": ["nodejs"]},
+    {"id": "improvement-district", "role": "insidepartners", "when": T("2025 – Present", "2025 – Actualidad"), "status": "progress",
+     "title": T("AI-powered operating model for an urban improvement district", "Modelo operativo con IA para un distrito de mejora urbana"),
+     "summary": T("An ongoing initiative to run a city business/general improvement district with automation and AI.",
+                  "Una iniciativa en curso para gestionar un distrito de mejora empresarial/general de una ciudad con automatización e IA."),
+     "outcome": T("In active development; an early-stage initiative, not yet shipped.",
+                  "En desarrollo activo; una iniciativa en fase inicial, aún no lanzada."),
+     "skills": ["workflow-automation", "multi-agent", "civic-tech", "product"], "stack": []},
+    {"id": "voice-receptionist", "role": "insidepartners", "when": T("Late 2025 – Present", "Finales de 2025 – Actualidad"),
+     "title": T("Voice AI reception and workflow automation for a care practice", "Recepción con IA de voz y automatización de flujos para una consulta de cuidados"),
+     "summary": T("A voice-automated receptionist plus AI tooling and task automation for practitioners.",
+                  "Una recepcionista automatizada por voz, además de herramientas de IA y automatización de tareas para los profesionales."),
+     "outcome": T("Reception and administrative workflows automated, freeing practitioner time for clients.",
+                  "Flujos de recepción y administrativos automatizados, liberando tiempo de los profesionales para sus clientes."),
+     "skills": ["voice-ai", "workflow-automation", "conversational-ai", "product"], "stack": []},
+    {"id": "saas-ai-assistant", "role": "insidepartners", "when": T("Late 2025 – Present", "Finales de 2025 – Actualidad"),
+     "title": T("Conversational AI and RAG in a SaaS product", "IA conversacional y RAG en un producto SaaS"),
+     "summary": T("Embedded an AI assistant and retrieval-augmented answers into an existing software product.",
+                  "Integré un asistente de IA y respuestas con recuperación aumentada en un producto de software existente."),
+     "outcome": T("AI assistance shipped into the live product, grounded in the product's own content.",
+                  "Asistencia de IA lanzada en el producto en producción, basada en el propio contenido del producto."),
+     "skills": ["rag", "conversational-ai", "evals", "product"], "stack": []},
     {"id": "re-decision-engine", "role": "insidepartners", "when": T("2025 – Present", "2025 – Actualidad"),
      "title": T("Real-estate ML decision engine", "Motor de decisión de ML inmobiliario"),
      "summary": T("Per-asset hold, sell, refinance and renovate scoring, fed from AppFolio and QuickBooks into BigQuery with a Looker layer.",
@@ -318,6 +353,26 @@ PROJECTS = [
 
 # Problem / approach copy for every project, merged into PROJECTS below.
 CASES = {
+    "portfolio-platform": (
+        T("A real-estate investment operation needed a platform to evaluate properties and portfolios and act on buy/sell/hold decisions, and wanted it built fast, using AI agents to do much of the engineering with humans in the loop.",
+          "Una operación de inversión inmobiliaria necesitaba una plataforma para evaluar propiedades y carteras y actuar sobre decisiones de comprar, vender o mantener, y quería construirla rápido, usando agentes de IA para hacer buena parte de la ingeniería con humanos en el circuito."),
+        T("Building the portfolio evaluation and trading platform (React/TypeScript/Node on a cloud data pipeline) while pioneering an autonomous engineering workflow: AI agents doing ETL, analysis, and implementation behind human-in-the-loop review gates, so both the product and the way it's built are AI-native.",
+          "Construyendo la plataforma de evaluación y compraventa de carteras (React/TypeScript/Node sobre un pipeline de datos en la nube) a la vez que se desarrolla un flujo de ingeniería autónoma: agentes de IA que hacen ETL, análisis e implementación tras puertas de revisión con humano en el circuito, de modo que tanto el producto como la forma de construirlo son nativos de IA.")),
+    "improvement-district": (
+        T("Urban business- and general-improvement districts run on manual administration (assessments, services, reporting, and stakeholder communication). There's a real opportunity to run one far more efficiently with automation and AI.",
+          "Los distritos de mejora empresarial y general de las ciudades funcionan con administración manual (evaluaciones, servicios, informes y comunicación con las partes interesadas). Hay una oportunidad real de gestionar uno con mucha más eficiencia mediante automatización e IA."),
+        T("Designing and building an AI-powered operating model for a neighborhood improvement district, automating administration, operations, and stakeholder workflows end to end.",
+          "Diseñando y construyendo un modelo operativo con IA para un distrito de mejora de barrio, automatizando de principio a fin la administración, las operaciones y los flujos de trabajo con las partes interesadas.")),
+    "voice-receptionist": (
+        T("A professional care practice was losing time to phone reception, manual scheduling, email triage, and administrative overhead that pulled practitioners away from their clients.",
+          "Una consulta profesional de cuidados perdía tiempo en la recepción telefónica, la programación manual, la gestión del correo y una carga administrativa que alejaba a los profesionales de sus clientes."),
+        T("Built a voice-automated receptionist and a set of AI tools for the practitioners: automating intake and scheduling calls, email and task management, and routine admin, with human oversight where it mattered.",
+          "Construí una recepcionista automatizada por voz y un conjunto de herramientas de IA para los profesionales: automatización de las llamadas de admisión y de programación, gestión del correo y de las tareas, y la administración rutinaria, con supervisión humana donde importaba.")),
+    "saas-ai-assistant": (
+        T("A software company wanted an AI assistant inside their product so users could ask questions and get accurate answers grounded in the product's own data, without hallucination.",
+          "Una empresa de software quería un asistente de IA dentro de su producto para que los usuarios pudieran hacer preguntas y obtener respuestas precisas basadas en los datos del propio producto, sin alucinaciones."),
+        T("Integrated a conversational assistant with retrieval-augmented generation over the product's domain data, with grounding, guardrails, and evaluation so answers stayed accurate and on-topic.",
+          "Integré un asistente conversacional con generación aumentada por recuperación sobre los datos del dominio del producto, con anclaje, guardrails y evaluación para que las respuestas se mantuvieran precisas y centradas en el tema.")),
     "re-decision-engine": (
         T("Real-estate investors and operators decide whether to hold, sell, refinance, or renovate each property using data scattered across property-management and accounting systems, so the analysis is slow, manual, and inconsistent from asset to asset.",
           "Los inversores y operadores inmobiliarios deciden si mantener, vender, refinanciar o reformar cada propiedad con datos dispersos entre sistemas de gestión de propiedades y de contabilidad, por lo que el análisis es lento, manual e inconsistente de un activo a otro."),
@@ -387,6 +442,7 @@ CASES = {
 # Where each project sits on the timeline page, as (year, month). These are
 # estimates inside each role's dates; the page labels them "~". Edit freely.
 AT = {
+    "portfolio-platform": (2026, 8), "improvement-district": (2026, 4), "voice-receptionist": (2025, 12), "saas-ai-assistant": (2025, 10),
     "re-decision-engine": (2026, 2), "billing-agents": (2025, 11), "ai-governance": (2026, 6), "elteve": (2022, 5),
     "nymblr-ranking": (2022, 7), "nymblr-integration": (2023, 11),
     "onemata-streaming": (2020, 10), "onemata-quality": (2021, 6), "onemata-portal": (2022, 1),
@@ -760,6 +816,7 @@ UI = {
     "footer_privacy": T("Privacy & cookies", "Privacidad y cookies"),
     "footer_cookies": T("Cookie settings", "Ajustes de cookies"),
     "print": T("Print / save as PDF", "Imprimir / guardar como PDF"),
+    "in_progress": T("In progress", "En curso"),
     "download_cv": T("Download résumé (PDF)", "Descargar currículum (PDF, en inglés)"),
     "actions": {
         "lang": T("Switch language to Español", "Cambiar idioma a English"),

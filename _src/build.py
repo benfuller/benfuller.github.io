@@ -360,7 +360,7 @@ def event_html(e, lang):
         return (f'<li class="ev project" data-type="project" data-role="{r["id"]}">'
                 f'<div class="ev-meta"><span class="k">{h(ui("tl_kind_project", lang))}</span><span class="d">~{e["year"]}</span></div>'
                 f'<a class="ttl" href="{base}?project={p["id"]}#p-{p["id"]}">{h(tr(p["title"], lang))}</a>'
-                f'<span class="sub">{h(r["company"])}</span></li>')
+                f'<span class="sub">{h(r["company"])}{(" · " + ui("in_progress", lang)) if p.get("status") else ""}</span></li>')
     p = e["press"]
     when = f'{MONTHS_SHORT[lang][e["month"] - 1]} {e["year"]}'
     return (f'<li class="ev press" data-type="press">'
@@ -454,8 +454,9 @@ def project_html(p, lang):
         stack = (f'<h4>{h(ui("tech", lang))}</h4><div class="tags">'
                  + " ".join(skill_link(s, lang) for s in p["stack"]) + "</div>")
     allskills = " ".join(p["skills"] + p["stack"])
+    badge = f'<em class="status">{h(ui("in_progress", lang))}</em> ' if p.get("status") else ""
     return f'''        <article class="proj" id="p-{p["id"]}" data-company="{p["role"]}" data-skills="{allskills}">
-          <div class="proj-meta"><a class="co-chip" href="{home(lang)}?company={p["role"]}#projects" data-company="{p["role"]}">{h(role["company"])}</a><span>{h(tr(p["when"], lang))}</span></div>
+          <div class="proj-meta"><a class="co-chip" href="{home(lang)}?company={p["role"]}#projects" data-company="{p["role"]}">{h(role["company"])}</a><span>{badge}{h(tr(p["when"], lang))}</span></div>
           <h3>{h(tr(p["title"], lang))}</h3>
           <p>{h(tr(p["summary"], lang))}</p>
           <p class="outcome"><b>{h(ui("outcome", lang))}</b> {h(tr(p["outcome"], lang))}</p>
@@ -786,7 +787,7 @@ def build_index(lang):
         r = ROLE[p["role"]]
         k = " ".join([skill_name(s, lang) for s in p["skills"] + p["stack"]]
                      + [tr(p["summary"], lang), tr(p["outcome"], lang), tr(p["problem"], lang), tr(p["approach"], lang)])
-        add("project", tr(p["title"], lang), f'{r["company"]} · {tr(p["when"], lang)}', f"{base}?project={p['id']}#p-{p['id']}", k)
+        add("project", tr(p["title"], lang), f'{r["company"]} · {tr(p["when"], lang)}' + (f' · {ui("in_progress", lang)}' if p.get("status") else ""), f"{base}?project={p['id']}#p-{p['id']}", k)
     for s in C.SKILLS:
         sid = s[0]
         n, rr = len(USE_P.get(sid, [])), len(USE_R.get(sid, []))
