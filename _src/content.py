@@ -652,7 +652,7 @@ UI = {
     "tech": T("Technologies", "Tecnologías"),
     "role_skills": T("Skills & technologies", "Habilidades y tecnologías"),
     "related_projects": T("{n} related projects →", "{n} proyectos relacionados →"),
-    "more_page": T("Company page: screenshots, links and details →", "Página de la empresa: capturas, enlaces y detalles →"),
+    "more_page": T("Company page →", "Página de la empresa →"),
     "timeline_h": T("Timeline", "Cronología"),
     "timeline_lede": T("My roles, projects and press in order on one line, newest first. Choose what to show.",
                        "Mis puestos, proyectos y prensa en orden sobre una misma línea, de lo más reciente a lo más antiguo. Elige qué mostrar."),

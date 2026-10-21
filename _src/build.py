@@ -220,8 +220,9 @@ def header(lang, nav_items, alts):
           {SEARCH_ICON}<span>{h(ui("search", lang))}</span><kbd>⌘K</kbd>
         </button>
         <span class="lang" role="group" aria-label="Language / Idioma">{langs[0]}<span aria-hidden="true">/</span>{langs[1]}</span>
+        <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="{"Menu" if lang == "en" else "Menú"}"><span aria-hidden="true"></span></button>
       </div>
-      <nav aria-label="{"Primary" if lang == "en" else "Principal"}" style="--cols:{3 if len(nav_items) > 4 else len(nav_items)}">
+      <nav id="site-nav" aria-label="{"Primary" if lang == "en" else "Principal"}">
         {nav}
       </nav>
     </div>
@@ -379,12 +380,15 @@ def role_meta(role, lang):
 
 
 def role_html(role, lang):
-    bullets = "\n".join(f"          <li>{rich(tr(b, lang), lang)}</li>" for b in role["bullets"])
     chips = " ".join(skill_link(s, lang, "tag") for s in role["skills"])
     nproj = sum(1 for p in C.PROJECTS if p["role"] == role["id"])
-    more = ""
-    more += f'<p class="more">{a(page_path(lang, role["page"]), ui("more_page", lang))}</p>'
-    more += (f'<p class="more">{a(f"{home(lang)}?company={role["id"]}#projects", ui("related_projects", lang, n=nproj))}</p>')
+    sid = f'skills-{role["id"]}'
+    actions = (
+        f'<button type="button" class="skills-toggle" aria-expanded="false" aria-controls="{sid}" hidden>'
+        f'{h(ui("role_skills", lang))} <span class="count">{len(role["skills"])}</span><span class="chev" aria-hidden="true"></span></button>'
+        f'{a(page_path(lang, role["page"]), ui("more_page", lang))}'
+        f'{a(f"{home(lang)}?company={role["id"]}#projects", ui("related_projects", lang, n=nproj))}')
+    bullets = "\n".join(f"          <li>{rich(tr(b, lang), lang)}</li>" for b in role["bullets"])
     return f'''      <article class="job" id="{role["id"]}">
         <div class="job-head">
           <div class="logos">{logos(role)}</div>
@@ -396,11 +400,8 @@ def role_html(role, lang):
         <ul>
 {bullets}
         </ul>
-        <details class="more-skills">
-          <summary>{h(ui("role_skills", lang))} <span class="count">{len(role["skills"])}</span></summary>
-          <div class="tags">{chips}</div>
-        </details>
-        {more}
+        <div class="job-actions">{actions}</div>
+        <div class="tags skills-panel" id="{sid}">{chips}</div>
       </article>'''
 
 

@@ -114,7 +114,8 @@
     var y = window.scrollY;
     topBtn.classList.toggle('show', y > 700);
     if (hdr) {
-      var mobile = window.matchMedia('(max-width: 560px)').matches;
+      var mobile = window.matchMedia('(max-width: 700px)').matches;
+      if (hdr.classList.contains('menu-open')) { lastY = y; return; }
       if (mobile && y > lastY + 6 && y > 120) hdr.classList.add('hide');
       else if (y < lastY - 6 || y < 120) hdr.classList.remove('hide');
     }
@@ -263,13 +264,44 @@
     else if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); openPalette(); }
   });
 
+  /* --------------------------------------------------- hamburger menu */
+  var menuBtn = document.getElementById('menu-btn');
+  function setMenu(open) {
+    if (!hdr || !menuBtn) return;
+    hdr.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if (open) hdr.classList.remove('hide');
+  }
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () { setMenu(!hdr.classList.contains('menu-open')); });
+    document.getElementById('site-nav').addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('click', function (e) { if (!e.target.closest('header.top')) setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && hdr.classList.contains('menu-open')) { setMenu(false); menuBtn.focus(); } });
+    window.matchMedia('(min-width: 701px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
+  }
+
+  /* ------------------------------------------- role skills show/hide */
+  [].forEach.call(document.querySelectorAll('.skills-toggle'), function (btn) {
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    btn.hidden = false; panel.hidden = true;           // without JS the list simply stays visible
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open)); panel.hidden = !open;
+    });
+  });
+
   /* ------------------------------------------------------------- print */
   var opened = [];
+  var panels = [];
   window.addEventListener('beforeprint', function () {
-    opened = [];
+    opened = []; panels = [];
     [].forEach.call(document.querySelectorAll('details'), function (d) { opened.push([d, d.open]); d.open = true; });
+    [].forEach.call(document.querySelectorAll('.skills-panel'), function (p) { panels.push([p, p.hidden]); p.hidden = false; });
   });
-  window.addEventListener('afterprint', function () { opened.forEach(function (p) { p[0].open = p[1]; }); });
+  window.addEventListener('afterprint', function () {
+    opened.forEach(function (p) { p[0].open = p[1]; });
+    panels.forEach(function (p) { p[0].hidden = p[1]; });
+  });
 
   // Language links should keep a filter/hash? No: keep it simple and let the browser navigate.
   window.addEventListener('popstate', function () { if (list) { var p = new URLSearchParams(location.search); state.company = p.get('company') || ''; state.skill = p.get('skill') || ''; applyFilters(false); } });
