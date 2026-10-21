@@ -29,7 +29,8 @@ MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "Au
              "November", "December"]
 SITE = C.SITE
 URL = SITE["url"]
-CV = {"en": "/benjamin-fuller-resume.pdf", "es": "/es/benjamin-fuller-curriculum.pdf"}
+CV_FILE = "/media/resumes/Benjamin_Fuller_Resume.pdf"   # supplied by Ben; edit the file itself to update it
+CV = {"en": CV_FILE, "es": CV_FILE}
 
 
 # ---------------------------------------------------------------- helpers
@@ -551,7 +552,7 @@ def build_home(lang):
       <div class="links">
         {li}
         <a href="#experience">{h(ui("see_my_work", lang))}</a>
-        <a href="{CV[lang]}" download>{h(ui("download_cv", lang))}</a>
+        <a href="{CV[lang]}" download="Benjamin_Fuller_Resume.pdf">{h(ui("download_cv", lang))}</a>
       </div>
     </div>
 
@@ -608,7 +609,7 @@ def build_home(lang):
     <section id="contact">
       <h2>{h(ui("contact_h", lang))}</h2>
       <p>{fill(h(tr(H["contact"], lang)), linkedin=li)}</p>
-      <p><a href="{CV[lang]}" download>{h(ui("download_cv", lang))}</a></p>
+      <p><a href="{CV[lang]}" download="Benjamin_Fuller_Resume.pdf">{h(ui("download_cv", lang))}</a></p>
       <p>{h(tr(H["languages"], lang))}</p>
     </section>'''
     alts = {lg: home(lg) for lg in LANGS}
@@ -810,78 +811,6 @@ def build_consent_js():
     write("consent.js", tmpl.replace("/*POSTHOG_STUB*/", stub))
 
 
-# ---------------------------------------------------------------- résumé PDF
-
-RESUME_CSS = """
-@page { size: %s; margin: 0.5in 0.6in; }
-* { box-sizing: border-box; }
-body { margin: 0; color: #111; font: 9.3pt/1.34 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
-h1 { font-size: 23pt; line-height: 1.1; margin: 0 0 2pt; letter-spacing: -.01em; }
-.role { font-size: 11pt; color: #444; margin: 0 0 5pt; }
-.contact { font-size: 9pt; color: #333; margin: 0 0 1pt; }
-h2 { break-after: avoid; font-size: 8.6pt; text-transform: uppercase; letter-spacing: .12em; color: #444; border-bottom: .75pt solid #bbb; padding-bottom: 2pt; margin: 10pt 0 5pt; }
-p { margin: 0 0 4pt; }
-.lead { font-weight: 600; }
-.job { margin: 0 0 6.5pt; break-inside: avoid; }
-.row { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
-.row b { font-size: 10.2pt; }
-.when { color: #444; white-space: nowrap; font-size: 9pt; }
-.meta { color: #555; font-size: 8.8pt; margin: 0 0 2pt; }
-ul { margin: 2pt 0 0; padding-left: 13pt; }
-li { margin: 0 0 1.6pt; }
-.skill { margin: 0 0 3pt; }
-a { color: inherit; text-decoration: none; }
-"""
-
-
-def resume_html(lang):
-    H = C.HOME
-    li = SITE["linkedin"].replace("https://www.", "")
-    flat = lambda t: plain(re.sub(r"\{(\w+)\}", r"\1", tr(t, lang)))
-    jobs = []
-    for r in C.ROLES:
-        meta = flat(r["meta"]) + (f' ({"NASDAQ: ASPS"})' if r["id"] == "altisource" else "")
-        if r.get("meta_link"):
-            meta += " " + r["meta_link"][0]
-        bullets = "".join(f"<li>{h(flat(b))}</li>" for b in r["bullets"])
-        jobs.append(f'''<div class="job"><div class="row"><b>{h(flat(r["title"]))} · {h(r["company"])}</b><span class="when">{h(flat(r["when"]))}</span></div>
-<p class="meta">{h(meta)}</p><ul>{bullets}</ul></div>''')
-    skills = "".join(f'<p class="skill"><b>{h(tr(n, lang))}:</b> {h(tr(s, lang))}</p>' for _, n, s in C.CATEGORIES)
-    edu_t, edu_s = H["education"]
-    paras = "".join(f"<p>{h(tr(H['about'][i], lang))}</p>" for i in (2, 3, 4))
-    labels = {"en": ("Summary", "Experience", "Skills", "Education", "Languages"),
-              "es": ("Resumen", "Experiencia", "Habilidades", "Formación", "Idiomas")}[lang]
-    size = "Letter" if lang == "en" else "A4"
-    return f'''<!DOCTYPE html>
-<html lang="{lang}"><head><meta charset="utf-8"><title>Benjamin Fuller · {h(tr(H["role"], lang))}</title>
-<style>{RESUME_CSS % size}</style></head><body>
-<h1>Benjamin Fuller</h1>
-<p class="role">{h(tr(H["role"], lang))}</p>
-<p class="contact">{h(tr(H["location"], lang))}</p>
-<p class="contact">{li} · benfuller.me</p>
-<h2>{labels[0]}</h2><p class="lead">{h(tr(H["tagline"], lang))}</p>{paras}
-<h2>{labels[1]}</h2>{"".join(jobs)}
-<h2>{labels[2]}</h2>{skills}
-<h2>{labels[3]}</h2><p><b>{h(tr(edu_t, lang))}</b>, {h(edu_s)}</p>
-<h2>{labels[4]}</h2><p>{h(plain(tr(H["languages"], lang)).replace("Languages: ", "").replace("Idiomas: ", ""))}</p>
-</body></html>'''
-
-
-def build_resume(lang, pdf=False):
-    src = os.path.join(HERE, f"resume-{lang}.html")
-    with open(src, "w", encoding="utf-8") as f:
-        f.write(resume_html(lang))
-    if not pdf:
-        return
-    import subprocess
-    chrome = next((p for p in ("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "google-chrome", "chromium") if os.path.exists(p) or "/" not in p), None)
-    out = os.path.join(ROOT, CV[lang].lstrip("/"))
-    os.makedirs(os.path.dirname(out), exist_ok=True)
-    subprocess.run([chrome, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--print-to-pdf={out}",
-                    "file://" + src], check=True, capture_output=True)
-    print("wrote", os.path.relpath(out, ROOT))
-
-
 def validate():
     ids = {s[0] for s in C.SKILLS}
     for p in C.PROJECTS:
@@ -903,7 +832,6 @@ if __name__ == "__main__":
             build_company(lg, key)
         build_privacy(lg)
         build_timeline(lg)
-        build_resume(lg, pdf="--pdf" in sys.argv)
         build_index(lg)
     build_sitemap()
     build_consent_js()

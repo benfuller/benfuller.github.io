@@ -710,7 +710,7 @@ UI = {
     "footer_privacy": T("Privacy & cookies", "Privacidad y cookies"),
     "footer_cookies": T("Cookie settings", "Ajustes de cookies"),
     "print": T("Print / save as PDF", "Imprimir / guardar como PDF"),
-    "download_cv": T("Download résumé (PDF)", "Descargar currículum (PDF)"),
+    "download_cv": T("Download résumé (PDF)", "Descargar currículum (PDF, en inglés)"),
     "actions": {
         "lang": T("Switch language to Español", "Cambiar idioma a English"),
         "linkedin": T("Open LinkedIn", "Abrir LinkedIn"),
