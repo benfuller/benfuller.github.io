@@ -536,7 +536,7 @@ HOME = {
     "domains": T("Real estate & proptech · FinTech & regulated data · AI-native platforms",
                  "Sector inmobiliario y proptech · FinTech y datos regulados · Plataformas nativas de IA"),
     "strip": [
-        (T("Patent", "Patente"), T("Led a patented Rental Automated Valuation Model", "Lideré un Modelo de Valoración Automatizada de Alquileres patentado")),
+        (T("Leadership", "Liderazgo"), T("Directed 50+ engineers; grew teams from 0 to 15", "Dirigí a más de 50 ingenieros; hice crecer equipos de 0 a 15")),
         (T("Compliance", "Cumplimiento"), T("Zero audit findings · SOC 2 · HIPAA/CLIA", "Cero hallazgos de auditoría · SOC 2 · HIPAA/CLIA")),
         (T("Work authorization", "Autorización de trabajo"), T("US citizen · full EU work authorization", "Ciudadano de EE. UU. · autorización de trabajo plena en la UE")),
     ],
